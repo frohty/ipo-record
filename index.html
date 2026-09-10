@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff7f0">
+  <link rel="manifest" href="manifest.json">
+  <title>공모주 기록장</title>
+  <style>
+    :root{
+      --bg:#fff9f4; --card:#fffdf9; --line:#eadfd5; --text:#262323; --muted:#7d7470;
+      --accent:#b73535; --accent-soft:#f9dddd; --green:#31865a; --green-soft:#dff2e7;
+      --blue:#2468d8; --blue-soft:#e5eefc; --yellow:#f2b84b; --shadow:0 8px 22px rgba(83,49,31,.06);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:#efe7df;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",Segoe UI,sans-serif;color:var(--text)}
+    button,input,select{font:inherit}
+    .app{width:min(100%,460px);margin:0 auto;min-height:100dvh;background:var(--bg);position:relative;padding-bottom:84px}
+    header{padding:18px 18px 8px;position:sticky;top:0;background:rgba(255,249,244,.94);backdrop-filter:blur(10px);z-index:5}
+    .topline{display:flex;align-items:center;justify-content:space-between}
+    h1{font-size:21px;margin:0;font-weight:800}
+    .icons{display:flex;gap:8px}.iconbtn{border:0;background:transparent;font-size:21px;padding:6px;border-radius:10px}
+    .date{font-size:14px;color:#5d6875;margin-top:8px}
+    main{padding:8px 14px 22px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .section-title strong{font-size:16px}.more{border:0;background:transparent;color:var(--muted);font-size:13px}
+    .schedule-row,.record-row,.broker-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #f0e7df}
+    .schedule-row:first-of-type,.record-row:first-of-type,.broker-row:first-of-type{border-top:0}
+    .day{font-weight:800;min-width:52px}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+    .badge{padding:5px 8px;border-radius:9px;font-size:12px;font-weight:700;white-space:nowrap}
+    .pink{background:var(--accent-soft);color:var(--accent)}.green{background:var(--green-soft);color:var(--green)}
+    .blue{background:var(--blue-soft);color:var(--blue)}.yellow{background:#fff0c9;color:#8a6300}
+    .status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 2px}
+    .status-box{text-align:center;background:#fffaf6;border:1px solid #eee2d9;padding:10px 4px;border-radius:13px}
+    .status-box b{display:block;font-size:17px;margin-top:4px}.status-box span{font-size:11px;color:var(--muted)}
+    .profit{font-size:28px;font-weight:850;color:#e31d1d;margin:6px 0}
+    .loss{color:#1765d5}.gain{color:#e31d1d}
+    .tabs{display:flex;gap:7px;overflow:auto;padding-bottom:6px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:12px;white-space:nowrap}
+    .tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+    .seg{display:flex;background:#f4ebe4;border-radius:12px;padding:4px;margin-bottom:12px}.seg button{flex:1;border:0;background:transparent;padding:8px;border-radius:9px;font-size:13px}.seg .active{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .sortline{display:flex;justify-content:space-between;align-items:center;margin:10px 2px}
+    .sortline select{border:1px solid var(--line);background:white;border-radius:10px;padding:7px 10px}
+    .month{font-weight:800;margin:16px 2px 5px}
+    nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,460px);display:grid;grid-template-columns:1fr 1fr 1.15fr 1fr 1fr;background:#fffaf5;border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));z-index:9}
+    nav button{border:0;background:transparent;color:#6f737a;font-size:11px;padding:4px 0} nav button.active{color:#a52424;font-weight:700}
+    nav .ico{display:block;font-size:20px;margin-bottom:2px}.plus{width:52px;height:52px;border-radius:50%;background:#f2a08d!important;color:#7a1717!important;font-size:30px!important;margin:-20px auto 0;box-shadow:0 5px 14px rgba(149,70,53,.2)}
+    .screen{display:none}.screen.active{display:block}
+    .sheetback{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:20}.sheetback.show{display:block}
+    .sheet{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,460px);background:#fffaf5;border-radius:22px 22px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
+    .action{display:flex;align-items:center;gap:13px;background:white;border:1px solid var(--line);padding:16px;border-radius:15px;margin:9px 0;width:100%;text-align:left}
+    .action .big{font-size:27px}.action b{display:block}.action small{color:var(--muted)}
+    .form{display:none}.form.show{display:block}.form label{display:block;font-size:12px;color:var(--muted);margin:12px 2px 5px}.form input,.form select{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:12px}
+    .calc{background:#fff3ed;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.7}
+    .primary{width:100%;border:0;border-radius:13px;background:var(--accent);color:white;padding:13px;margin-top:14px;font-weight:800}
+    .secondary{width:100%;border:1px solid var(--line);border-radius:13px;background:white;padding:12px;margin-top:8px}
+    .search{width:100%;border:1px solid var(--line);background:white;border-radius:14px;padding:12px 14px;margin:4px 0 10px}
+    .empty{text-align:center;color:var(--muted);padding:28px 8px}
+    .yearpick{display:flex;align-items:center;justify-content:center;gap:24px;font-size:22px;font-weight:800;margin:4px 0 12px}
+    .yearpick button{border:0;background:transparent;font-size:22px}
+    .detail-kv{display:grid;grid-template-columns:100px 1fr;gap:8px;font-size:13px;padding:6px 0}.detail-kv span:first-child{color:var(--muted)}
+    .timeline{border-left:2px solid #f0b54a;padding-left:14px;margin-left:7px}.timeline .event{margin:13px 0}.event small{color:var(--muted)}
+    .notice{font-size:12px;color:var(--muted);line-height:1.55}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="topline"><h1>공모주 기록장 🌱</h1><div class="icons"><button class="iconbtn" onclick="go('records')">⌕</button><button class="iconbtn" onclick="alert('알림 기능은 2차 버전에서 연결할게요.')">🔔</button></div></div>
+    <div class="date" id="today"></div>
+  </header>
+
+  <main>
+    <section id="home" class="screen active"></section>
+    <section id="stats" class="screen"></section>
+    <section id="records" class="screen"></section>
+    <section id="detail" class="screen"></section>
+    <section id="more" class="screen"></section>
+  </main>
+
+  <nav>
+    <button data-screen="home" class="active" onclick="go('home')"><span class="ico">⌂</span>홈</button>
+    <button data-screen="stats" onclick="go('stats')"><span class="ico">▥</span>통계</button>
+    <button class="plus" onclick="openSheet()">＋</button>
+    <button data-screen="records" onclick="go('records')"><span class="ico">▣</span>기록</button>
+    <button data-screen="more" onclick="go('more')"><span class="ico">•••</span>더보기</button>
+  </nav>
+</div>
+
+<div class="sheetback" id="sheetback" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet" id="sheet">
+    <div id="actions">
+      <button class="action" onclick="showForm('subForm')"><span class="big">🗓️</span><span><b>청약 기록하기</b><small>새로운 공모주 청약을 기록해요.</small></span></button>
+      <button class="action" onclick="showForm('allocForm')"><span class="big">📄</span><span><b>배정 결과 입력</b><small>배정대기 종목만 보여드려요.</small></span></button>
+      <button class="action" onclick="showForm('saleForm')"><span class="big">📊</span><span><b>매도 기록하기</b><small>보유 수량이 있는 종목만 보여드려요.</small></span></button>
+      <button class="secondary" onclick="closeSheet()">취소</button>
+    </div>
+
+    <div class="form" id="subForm">
+      <b>청약 기록하기</b>
+      <label>종목</label><select id="subStock"></select>
+      <label>내 청약 증권사</label><select id="subBroker"><option>대신증권</option><option>KB증권</option><option>한국투자증권</option><option>NH투자증권</option><option>삼성증권</option><option>하나증권</option></select>
+      <label>공모가</label><input id="subOffer" type="number" min="0" placeholder="확정 공모가 입력" oninput="updateSubCalc()">
+      <label>청약수량</label><input id="subQty" type="number" min="1" value="10" oninput="updateSubCalc()">
+      <div class="calc" id="subCalc"></div>
+      <button class="primary" onclick="saveSubscription()">저장</button><button class="secondary" onclick="backActions()">뒤로</button>
+    </div>
+
+    <div class="form" id="allocForm">
+      <b>배정 결과 입력</b>
+      <label>배정대기 종목</label><select id="allocStock"></select>
+      <label>배정수량</label><input id="allocQty" type="number" min="0" value="1">
+      <button class="primary" onclick="saveAllocation(false)">배정 저장</button>
+      <button class="secondary" onclick="saveAllocation(true)">미배정으로 저장</button>
+      <button class="secondary" onclick="backActions()">뒤로</button>
+    </div>
+
+    <div class="form" id="saleForm">
+      <b>매도 기록하기</b>
+      <label>보유 종목</label><select id="saleStock" onchange="updateSaleInfo()"></select>
+      <div class="calc" id="saleInfo"></div>
+      <label>매도수량</label><input id="saleQty" type="number" min="1" value="1" oninput="updateSaleInfo()">
+      <label>매도가</label><input id="salePrice" type="number" min="0" placeholder="예: 33100">
+      <label>실제 매도일</label><input id="saleDate" type="date">
+      <label>실제 매매손익</label><input id="salePnl" type="number" placeholder="증권사 표시 손익">
+      <button class="primary" onclick="saveSale()">저장</button><button class="secondary" onclick="backActions()">뒤로</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const schedule = [
+  {id:"s1",name:"네오사피엔스",date:"2026-09-10",endDate:"2026-09-11",broker:"대신증권",price:null,priceBand:"13,800~15,800원",listing:"2026-09-21",industry:"소프트웨어 · 생성형 AI",description:"AI 음성합성 플랫폼 타입캐스트를 운영하는 생성형 AI 기업"},
+  {id:"s2",name:"KB스팩34호",date:"2026-09-10",endDate:"2026-09-11",broker:"KB증권",price:2000,priceBand:"2,000원",listing:"2026-09-22",industry:"기업인수목적회사",description:"기업 인수합병을 목적으로 설립된 스팩"},
+  {id:"s3",name:"한국스팩17호",date:"2026-09-10",endDate:"2026-09-11",broker:"한국투자증권",price:2000,priceBand:"2,000원",listing:"2026-09-22",industry:"기업인수목적회사",description:"기업 인수합병을 목적으로 설립된 스팩"}
+];
+const demo = [
+ {id:"r1",name:"○○로봇",year:2026,subDate:"2026-07-28",broker:"미래에셋증권",offer:14000,subQty:null,allocated:2,status:"sold",sales:[{qty:2,price:31000,date:"2026-08-01",pnl:340000}]},
+ {id:"r2",name:"□□헬스케어",year:2026,subDate:"2026-06-18",broker:"하나증권",offer:22000,subQty:null,allocated:1,status:"sold",sales:[{qty:1,price:42000,date:"2026-06-25",pnl:200000}]},
+ {id:"r3",name:"◇◇에너지",year:2026,subDate:"2026-08-20",broker:"KB증권",offer:15000,subQty:100,allocated:3,status:"holding",sales:[]},
+ {id:"r4",name:"△△바이오",year:2026,subDate:"2026-09-08",broker:"한국투자증권",offer:25000,subQty:100,allocated:null,status:"waiting",sales:[]}
+];
+let records = JSON.parse(localStorage.getItem("ipoRecords") || "null") || demo;
+let sortOrder = localStorage.getItem("ipoSort") || "latest";
+let currentYear = 2026;
+
+function persist(){localStorage.setItem("ipoRecords",JSON.stringify(records))}
+function fmt(n){return Number(n||0).toLocaleString("ko-KR")+"원"}
+function pnlClass(n){return n>0?"gain":n<0?"loss":""}
+function totalPnl(r){return (r.sales||[]).reduce((a,s)=>a+Number(s.pnl||0),0)}
+function soldQty(r){return (r.sales||[]).reduce((a,s)=>a+Number(s.qty||0),0)}
+function remain(r){return Math.max(0,Number(r.allocated||0)-soldQty(r))}
+function statusLabel(r){return ({waiting:"배정대기",unallocated:"미배정",listing:"상장대기",holding:"보유중",sold:"매도완료"})[r.status]||r.status}
+function statusBadge(r){let c=r.status==="sold"?"pink":r.status==="holding"?"green":r.status==="waiting"?"blue":"yellow";return `<span class="badge ${c}">${statusLabel(r)}</span>`}
+function monthKey(d){return d?Number(d.slice(5,7))+"월":"미기록"}
+function ymd(d){return d?d.replaceAll("-","."):"미기록"}
+function yearRecords(y=currentYear){return records.filter(r=>r.year===y)}
+
+function renderHome(){
+  const yr=yearRecords(2026), pnl=yr.reduce((a,r)=>a+totalPnl(r),0);
+  const active=yr.filter(r=>["waiting","listing","holding"].includes(r.status));
+  const counts={waiting:yr.filter(r=>r.status==="waiting").length,listing:yr.filter(r=>r.status==="listing").length,holding:yr.filter(r=>r.status==="holding").length};
+  const now=new Date();
+  document.getElementById("home").innerHTML=`
+    <div class="card">
+      <div class="section-title"><strong>🗓 다가오는 공모주 일정</strong><button class="more" onclick="alert('자동 일정 연동은 2차 버전에서 연결할게요.')">더보기 ›</button></div>
+      ${schedule.map(s=>{let dd=Math.ceil((new Date(s.date+"T23:59:59")-now)/86400000);let tag=dd<=0?"오늘 시작":`D-${dd}`;return `<div class="schedule-row" onclick="showSchedule('${s.id}')"><div class="day">${s.date.slice(5).replace("-",".")}</div><div><b>${s.name}</b><div class="sub">${s.broker} · ${s.price?fmt(s.price):s.priceBand+" (확정 전)"}</div></div><span class="badge pink">${tag}</span></div>`}).join("")}
+    </div>
+    <div class="card">
+      <div class="section-title"><strong>📈 현재 진행 중인 내 공모주</strong><button class="more" onclick="go('records')">더보기 ›</button></div>
+      <div class="tabs"><span class="tab active">전체 ${active.length}</span><span class="tab">배정 ${counts.waiting}</span><span class="tab">상장대기 ${counts.listing}</span><span class="tab">보유중 ${counts.holding}</span></div>
+      ${active.length?active.map(r=>`<div class="record-row" onclick="openDetail('${r.id}')"><div>${monthKey(r.subDate)}</div><div><b>${r.name}</b><div class="sub">${r.broker}</div></div>${statusBadge(r)}</div>`).join(""):`<div class="empty">현재 진행 중인 종목이 없어요.</div>`}
+    </div>
+    <div class="card">
+      <div class="section-title"><strong>📊 2026년 공모주 성적</strong><button class="more" onclick="go('stats')">더보기 ›</button></div>
+      <div class="profit ${pnlClass(pnl)}">${pnl>=0?"+":""}${fmt(pnl)}</div>
+      <div class="status-grid"><div class="status-box"><span>공모주 기록</span><b>${yr.length}</b></div><div class="status-box"><span>매도완료</span><b>${yr.filter(r=>r.status==="sold").length}</b></div><div class="status-box"><span>보유중</span><b>${yr.filter(r=>r.status==="holding").length}</b></div><div class="status-box"><span>미배정</span><b>${yr.filter(r=>r.status==="unallocated").length}</b></div></div>
+      <div class="notice" style="margin-top:10px">2026년은 올해 장부로 통합해요. 앱 시작 전 삭제된 미배정 기록은 임의로 만들지 않습니다.</div>
+    </div>`;
+}
+
+function renderStats(){
+  const yr=yearRecords(currentYear), pnl=yr.reduce((a,r)=>a+totalPnl(r),0);
+  const brokers={}; yr.forEach(r=>brokers[r.broker]=(brokers[r.broker]||0)+totalPnl(r));
+  document.getElementById("stats").innerHTML=`
+    <div class="seg"><button class="active">연도별 전체</button><button onclick="document.getElementById('brokerSection').scrollIntoView({behavior:'smooth'})">증권사별</button><button onclick="document.getElementById('monthNote').scrollIntoView({behavior:'smooth'})">월별</button></div>
+    <div class="yearpick"><button onclick="changeYear(-1)">‹</button><span>${currentYear}년</span><button onclick="changeYear(1)">›</button></div>
+    <div class="card"><div class="section-title"><strong>${currentYear}년 공모주 성적</strong></div><div class="profit ${pnlClass(pnl)}">${pnl>=0?"+":""}${fmt(pnl)}</div>
+      <div class="status-grid"><div class="status-box"><span>기록</span><b>${yr.length}</b></div><div class="status-box"><span>매도완료</span><b>${yr.filter(r=>r.status==="sold").length}</b></div><div class="status-box"><span>보유중</span><b>${yr.filter(r=>r.status==="holding").length}</b></div><div class="status-box"><span>미배정</span><b>${yr.filter(r=>r.status==="unallocated").length}</b></div></div>
+    </div>
+    <div class="card" id="brokerSection"><div class="section-title"><strong>증권사별 손익</strong></div>${Object.keys(brokers).length?Object.entries(brokers).sort((a,b)=>b[1]-a[1]).map(([b,p])=>`<div class="broker-row"><div>🏦</div><div><b>${b}</b></div><b class="${pnlClass(p)}">${p>=0?"+":""}${fmt(p)}</b></div>`).join(""):`<div class="empty">이 연도의 기록이 아직 없어요.</div>`}</div><div class="card" id="monthNote"><div class="section-title"><strong>월별 손익</strong></div><div class="notice">실제 2026년 장부 데이터를 옮기면 월별 손익도 자동으로 표시됩니다.</div></div>`;
+}
+
+function renderRecords(){
+  let arr=[...yearRecords(currentYear)];
+  arr.sort((a,b)=>sortOrder==="latest"?(b.subDate||"").localeCompare(a.subDate||""):(a.subDate||"").localeCompare(b.subDate||""));
+  const groups={}; arr.forEach(r=>(groups[monthKey(r.subDate)] ||= []).push(r));
+  document.getElementById("records").innerHTML=`
+    <input class="search" id="q" placeholder="종목명 또는 증권사 검색" oninput="filterRecords()">
+    <div class="sortline"><b>${currentYear}년 종목 기록</b><select onchange="setSort(this.value)"><option value="latest" ${sortOrder==="latest"?"selected":""}>최신순</option><option value="oldest" ${sortOrder==="oldest"?"selected":""}>과거순</option></select></div>
+    <div id="recordList">${Object.entries(groups).map(([m,rs])=>`<div class="month">${m}</div><div class="card">${rs.map(r=>`<div class="record-row item" data-search="${(r.name+" "+r.broker).toLowerCase()}" onclick="openDetail('${r.id}')"><div>${r.subDate?r.subDate.slice(5).replace("-","."):"--"}</div><div><b>${r.name}</b><div class="sub">${r.broker}</div></div><div style="text-align:right">${r.status==="sold"?`<b class="${pnlClass(totalPnl(r))}">${totalPnl(r)>=0?"+":""}${fmt(totalPnl(r))}</b>`:statusBadge(r)}</div></div>`).join("")}</div>`).join("") || `<div class="empty">기록이 없어요.</div>`}</div>`;
+}
+function filterRecords(){const q=document.getElementById("q").value.toLowerCase();document.querySelectorAll(".item").forEach(x=>x.style.display=x.dataset.search.includes(q)?"grid":"none")}
+function setSort(v){sortOrder=v;localStorage.setItem("ipoSort",v);renderRecords()}
+function changeYear(d){currentYear=Math.min(2035,Math.max(2023,currentYear+d));renderStats();renderRecords()}
+
+function openDetail(id){
+ const r=records.find(x=>x.id===id); if(!r)return;
+ const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${ymd(s.date)} · ${s.qty??"미기록"}주 · ${fmt(s.price)}</div><small>실제 손익 ${s.pnl>=0?"+":""}${fmt(s.pnl)}</small></div>`).join("");
+ document.getElementById("detail").innerHTML=`
+   <div class="card"><div class="section-title"><strong>${r.name}</strong>${statusBadge(r)}</div><div class="sub">${r.broker} · ${r.year}년 공모주</div></div>
+   <div class="card"><strong>기본정보</strong>
+     <div class="detail-kv"><span>청약일</span><span>${ymd(r.subDate)}</span></div><div class="detail-kv"><span>증권사</span><span>${r.broker}</span></div><div class="detail-kv"><span>공모가</span><span>${fmt(r.offer)}</span></div><div class="detail-kv"><span>청약수량</span><span>${r.subQty??"미기록"}${r.subQty?"주":""}</span></div>
+   </div>
+   <div class="card"><strong>배정정보</strong><div class="detail-kv"><span>배정수량</span><span>${r.allocated==null?"미기록":r.allocated+"주"}</span></div><div class="detail-kv"><span>현재 보유</span><span>${remain(r)}주</span></div></div>
+   <div class="card"><strong>기록 내역</strong><div class="timeline"><div class="event"><b>청약</b><div>${ymd(r.subDate)} · ${r.broker}</div></div>${r.allocated!=null?`<div class="event"><b>배정</b><div>${r.allocated}주</div></div>`:""}${sales||`<div class="event"><small>아직 매도 기록이 없어요.</small></div>`}</div></div>
+   <div class="card"><strong>실제 총 매매손익</strong><div class="profit ${pnlClass(totalPnl(r))}" style="font-size:24px">${totalPnl(r)>=0?"+":""}${fmt(totalPnl(r))}</div></div>`;
+ go("detail");
+}
+function showSchedule(id){const s=schedule.find(x=>x.id===id);alert(`${s.name}\n공모가 ${s.price?fmt(s.price):s.priceBand+" (확정 전)"}\n청약일 ${ymd(s.date)} ~ ${ymd(s.endDate)}\n상장예정 ${ymd(s.listing)}\n주관사 ${s.broker}\n업종 ${s.industry}\n${s.description||""}`)}
+
+function renderMore(){
+ document.getElementById("more").innerHTML=`
+ <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="alert('1차 버전에서는 기록에 사용된 증권사를 자동으로 사용합니다.')">내 증권사 목록</button></div>
+ <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetDemo()">데모 데이터로 초기화</button></div>
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice">공모주 기록장 v1.1 실제사용 테스트<br>자동 공모주 일정/DART 연동은 다음 단계에서 연결합니다.</div></div>`;
+}
+
+function go(name){
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active")); document.getElementById(name).classList.add("active");
+ document.querySelectorAll("nav button[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===name));
+ if(name==="home")renderHome(); if(name==="stats")renderStats(); if(name==="records")renderRecords(); if(name==="more")renderMore();
+}
+function openSheet(){populateForms();document.getElementById("sheetback").classList.add("show");backActions()}
+function closeSheet(){document.getElementById("sheetback").classList.remove("show")}
+function showForm(id){document.getElementById("actions").style.display="none";document.querySelectorAll(".form").forEach(x=>x.classList.remove("show"));document.getElementById(id).classList.add("show");if(id==="subForm")updateSubCalc();if(id==="saleForm")updateSaleInfo()}
+function backActions(){document.getElementById("actions").style.display="block";document.querySelectorAll(".form").forEach(x=>x.classList.remove("show"))}
+function populateForms(){
+ document.getElementById("subStock").innerHTML=schedule.map(s=>`<option value="${s.id}">${s.name} · ${s.price?fmt(s.price):s.priceBand}</option>`).join(""); const first=schedule[0]; if(first){document.getElementById("subBroker").value=first.broker;document.getElementById("subOffer").value=first.price||"";}
+ document.getElementById("allocStock").innerHTML=records.filter(r=>r.status==="waiting").map(r=>`<option value="${r.id}">${r.name} · ${r.broker}</option>`).join("")||`<option value="">대기 종목 없음</option>`;
+ document.getElementById("saleStock").innerHTML=records.filter(r=>["holding","listing"].includes(r.status)&&remain(r)>0).map(r=>`<option value="${r.id}">${r.name} · 보유 ${remain(r)}주</option>`).join("")||`<option value="">보유 종목 없음</option>`;
+ document.getElementById("saleDate").value="2026-09-10";
+}
+function updateSubCalc(){const s=schedule.find(x=>x.id===document.getElementById("subStock").value)||schedule[0];const q=Number(document.getElementById("subQty").value||0);const price=Number(document.getElementById("subOffer").value||s.price||0);document.getElementById("subCalc").innerHTML=price?`공모가 <b>${fmt(price)}</b><br>청약금액 <b>${fmt(price*q)}</b><br>청약증거금(50%) <b>${fmt(price*q*.5)}</b>`:`확정 공모가가 아직 확인되지 않았어요.<br>증권사 앱의 확정 공모가를 입력하면 자동 계산됩니다.`}
+document.addEventListener("change",e=>{if(e.target.id==="subStock"){const s=schedule.find(x=>x.id===e.target.value);if(s){document.getElementById("subBroker").value=s.broker;document.getElementById("subOffer").value=s.price||"";}updateSubCalc()}});
+function saveSubscription(){const s=schedule.find(x=>x.id===document.getElementById("subStock").value),q=Number(document.getElementById("subQty").value||0),offer=Number(document.getElementById("subOffer").value||s?.price||0);if(!s||q<1)return alert("청약수량을 입력해주세요.");if(!offer)return alert("확정 공모가를 입력해주세요.");records.push({id:"r"+Date.now(),name:s.name,year:2026,subDate:s.date,broker:document.getElementById("subBroker").value,offer,subQty:q,allocated:null,status:"waiting",sales:[]});persist();closeSheet();renderHome();alert("청약 기록을 저장했어요.")}
+function saveAllocation(unallocated){const id=document.getElementById("allocStock").value,r=records.find(x=>x.id===id);if(!r)return alert("배정대기 종목이 없어요.");if(unallocated){r.status="unallocated";r.allocated=0}else{const q=Number(document.getElementById("allocQty").value);if(q<1)return alert("배정수량을 입력해주세요.");r.allocated=q;r.status="holding"}persist();closeSheet();renderHome();alert(unallocated?"미배정으로 저장했어요.":"배정 결과를 저장했어요.")}
+function updateSaleInfo(){const r=records.find(x=>x.id===document.getElementById("saleStock").value);if(!r){document.getElementById("saleInfo").innerHTML="보유 종목이 없어요.";return}const q=Math.min(Number(document.getElementById("saleQty").value||0),remain(r));document.getElementById("saleInfo").innerHTML=`현재 보유 <b>${remain(r)}주</b><br>매도 후 남은 수량 <b>${Math.max(0,remain(r)-q)}주</b>`}
+function saveSale(){const r=records.find(x=>x.id===document.getElementById("saleStock").value);if(!r)return alert("보유 종목이 없어요.");const q=Number(document.getElementById("saleQty").value),p=Number(document.getElementById("salePrice").value),d=document.getElementById("saleDate").value,pnl=Number(document.getElementById("salePnl").value);if(q<1||q>remain(r)||!p||!d||Number.isNaN(pnl))return alert("매도수량·매도가·매도일·실제 손익을 확인해주세요.");r.sales.push({qty:q,price:p,date:d,pnl});r.status=(remain(r)-q<=0)?"sold":"holding";persist();closeSheet();renderHome();alert(`매도 기록 저장 완료\n남은 수량 ${remain(r)}주`)}
+function backup(){const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),records},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ipo-record-backup.json";a.click();URL.revokeObjectURL(a.href)}
+function restoreFile(f){if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!Array.isArray(d.records))throw Error();records=d.records;persist();renderHome();renderMore();alert("복원했어요.")}catch(e){alert("올바른 백업 파일이 아니에요.")}};rd.readAsText(f)}
+function resetDemo(){if(confirm("현재 저장된 기록을 데모 데이터로 되돌릴까요?")){records=JSON.parse(JSON.stringify(demo));persist();renderHome();renderMore()}}
+const _d=new Date(); const _wd=["일","월","화","수","목","금","토"][_d.getDay()]; document.getElementById("today").textContent=`${_d.getFullYear()}. ${String(_d.getMonth()+1).padStart(2,"0")}. ${String(_d.getDate()).padStart(2,"0")} (${_wd})`;
+renderHome();
+if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{})}
+</script>
+</body>
+</html>
