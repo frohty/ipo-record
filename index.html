@@ -302,7 +302,7 @@ function renderBrokerDetail(){
   const pnl=arr.reduce((a,r)=>a+totalPnl(r),0);
   arr.sort((a,b)=>(b.subDate||"").localeCompare(a.subDate||""));
   document.getElementById("brokerDetail").innerHTML=`
-    <div class="backbar"><button onclick="go('stats')">‹</button><strong>${selectedBroker}</strong></div>
+    <div class="backbar"><button onclick="appBack()">‹</button><strong>${selectedBroker}</strong></div>
     <div class="yearpick"><button onclick="changeBrokerYear(-1)">‹</button><span>${currentYear}년</span><button onclick="changeBrokerYear(1)">›</button></div>
     <div class="card"><div class="section-title"><strong>${currentYear}년 손익</strong></div><div class="profit ${pnlClass(pnl)}">${pnl>=0?"+":""}${fmt(pnl)}</div>
       <div class="status-grid"><div class="status-box"><span>청약종목</span><b>${arr.length}</b></div><div class="status-box"><span>매도완료</span><b>${arr.filter(r=>r.status==="sold").length}</b></div><div class="status-box"><span>보유중</span><b>${arr.filter(r=>r.status==="holding").length}</b></div><div class="status-box"><span>미배정</span><b>${arr.filter(r=>r.status==="unallocated").length}</b></div></div>
@@ -315,7 +315,7 @@ function changeBrokerYear(d){currentYear=Math.min(2035,Math.max(2023,currentYear
 
 function renderScheduleAll(){
   document.getElementById("scheduleAll").innerHTML=`
-    <div class="backbar"><button onclick="go('home')">‹</button><strong>공모주 일정</strong></div>
+    <div class="backbar"><button onclick="appBack()">‹</button><strong>공모주 일정</strong></div>
     <div class="card"><div class="section-title"><strong>현재 등록된 일정</strong></div>
       ${schedule.map(s=>`<div class="schedule-row clickable" onclick="showSchedule('${s.id}')"><div class="day">${s.date.slice(5).replace("-",".")}~${s.endDate.slice(8)}</div><div><b>${s.name}</b><div class="sub">${s.broker} · ${s.price?fmt(s.price):s.priceBand}</div></div><span>›</span></div>`).join("")}
     </div>
@@ -326,7 +326,7 @@ function renderBrokerManage(){
   const s=brokerSettings();
   const names=Object.keys(s);
   document.getElementById("brokerManage").innerHTML=`
-    <div class="backbar"><button onclick="go('more')">‹</button><strong>내 증권사 목록</strong></div>
+    <div class="backbar"><button onclick="appBack()">‹</button><strong>내 증권사 목록</strong></div>
     <div class="card"><div class="notice">공모주 기록에 사용할 증권사를 관리해요. 사용하지 않게 된 증권사도 삭제하지 않고 비활성화하면 과거 기록은 그대로 남습니다.</div></div>
     <div class="card">${names.map(b=>`<div class="broker-manage-row"><div>🏦</div><div><b>${b}</b><div class="broker-meta">${s[b].type}${b==="하나증권"?" · 일반주식과 함께 사용":""}</div></div><button class="toggle ${s[b].active?"on":""}" onclick="toggleBroker('${b.replaceAll("'","\\'")}')"></button></div>`).join("")}</div>
     <div class="card"><div class="section-title"><strong>새 증권사 추가</strong></div><div style="display:flex;gap:8px"><select class="inline-select" id="newBroker" style="flex:1">${EXTRA_BROKERS.filter(b=>!s[b]).map(b=>`<option>${b}</option>`).join("")}</select><button class="inline-select" onclick="addBroker()">추가</button></div></div>`;
@@ -339,14 +339,64 @@ function renderMore(){
  document.getElementById("more").innerHTML=`
  <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="go('brokerManage')">내 증권사 목록</button><div class="notice" style="margin-top:8px">활성/비활성 관리 · 하나증권은 혼합사용으로 등록</div></div>
  <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetAllData()">전체 기록 초기화</button></div>
- <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.4</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>2026년 15종목 청약기간 반영 · 증권사별 종목 조회 · 월별 손익 · 증권사 관리 적용.<br>자동 공모주 일정 연동은 아직 연결 전입니다.</div></div>`;
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.5</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>2026년 15종목 청약기간 반영 · 증권사별 종목 조회 · 월별 손익 · 증권사 관리 · 앱 뒤로가기 이동 적용.<br>자동 공모주 일정 연동은 아직 연결 전입니다.</div></div>`;
 }
 
-function go(name){
- document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active")); document.getElementById(name).classList.add("active");
- document.querySelectorAll("nav button[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===name));
- if(name==="home")renderHome(); if(name==="stats")renderStats(); if(name==="records")renderRecords(); if(name==="brokerDetail")renderBrokerDetail(); if(name==="brokerManage")renderBrokerManage(); if(name==="scheduleAll")renderScheduleAll(); if(name==="more")renderMore();
+let currentScreen="home";
+let navigatingFromHistory=false;
+
+function renderScreen(name){
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+ const target=document.getElementById(name)||document.getElementById("home");
+ target.classList.add("active");
+ currentScreen=target.id;
+ document.querySelectorAll("nav button[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===currentScreen));
+ if(currentScreen==="home")renderHome(); if(currentScreen==="stats")renderStats(); if(currentScreen==="records")renderRecords(); if(currentScreen==="brokerDetail")renderBrokerDetail(); if(currentScreen==="brokerManage")renderBrokerManage(); if(currentScreen==="scheduleAll")renderScheduleAll(); if(currentScreen==="more")renderMore();
+ window.scrollTo(0,0);
 }
+
+function go(name, opts={}){
+ const replace=!!opts.replace;
+ const fromHistory=!!opts.fromHistory;
+ if(!fromHistory){
+   const state={app:true,screen:name,broker:selectedBroker||null,year:currentYear};
+   if(replace)history.replaceState(state,"",`#${name}`);
+   else history.pushState(state,"",`#${name}`);
+ }
+ renderScreen(name);
+}
+
+function appBack(){
+ const sheet=document.getElementById("sheetback");
+ if(sheet.classList.contains("show")){
+   const formOpen=[...document.querySelectorAll(".form")].some(x=>x.classList.contains("show"));
+   if(formOpen){backActions();return;}
+   closeSheet();return;
+ }
+ history.back();
+}
+
+window.addEventListener("popstate",e=>{
+ const st=e.state;
+ if(st&&st.app){
+   if(st.broker)selectedBroker=st.broker;
+   if(st.year)currentYear=st.year;
+   renderScreen(st.screen||"home");
+   if(st.root){
+     history.pushState({app:true,screen:"home",rootGuard:true,year:currentYear},"","#home");
+   }
+ }else{
+   history.pushState({app:true,screen:"home",rootGuard:true,year:currentYear},"","#home");
+   renderScreen("home");
+ }
+});
+
+function initNavigation(){
+ history.replaceState({app:true,screen:"home",root:true,year:currentYear},"","#home");
+ history.pushState({app:true,screen:"home",rootGuard:true,year:currentYear},"","#home");
+ renderScreen("home");
+}
+
 function openSheet(){populateForms();document.getElementById("sheetback").classList.add("show");backActions()}
 function closeSheet(){document.getElementById("sheetback").classList.remove("show")}
 function showForm(id){document.getElementById("actions").style.display="none";document.querySelectorAll(".form").forEach(x=>x.classList.remove("show"));document.getElementById(id).classList.add("show");if(id==="subForm")updateSubCalc();if(id==="saleForm")updateSaleInfo()}
@@ -367,7 +417,7 @@ function backup(){const blob=new Blob([JSON.stringify({version:1,exportedAt:new 
 function restoreFile(f){if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!Array.isArray(d.records))throw Error();records=d.records;persist();renderHome();renderMore();alert("복원했어요.")}catch(e){alert("올바른 백업 파일이 아니에요.")}};rd.readAsText(f)}
 function resetAllData(){if(confirm("저장된 모든 기록을 삭제할까요? 이 작업은 되돌릴 수 없어요.")){records=[];persist();localStorage.setItem("ipoSeedVersion",DATA_VERSION);renderHome();renderMore()}}
 const _d=new Date(); const _wd=["일","월","화","수","목","금","토"][_d.getDay()]; document.getElementById("today").textContent=`${_d.getFullYear()}. ${String(_d.getMonth()+1).padStart(2,"0")}. ${String(_d.getDate()).padStart(2,"0")} (${_wd})`;
-renderHome();
+initNavigation();
 if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{})}
 </script>
 </body>
