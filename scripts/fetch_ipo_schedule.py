@@ -173,14 +173,16 @@ def fetch_filings(key: str, begin: date, end: date) -> list[dict]:
 def build(key: str, today: date | None = None) -> dict:
     today = today or datetime.now(SEOUL).date()
     filings = fetch_filings(key, today - timedelta(days=LIST_LOOKBACK_DAYS), today)
-    candidates, seen = [], set()
+    candidates, seen, seen_corps = [], set(), set()
     for filing in filings:
         receipt = clean(filing.get("rcept_no"))
         corp_class = clean(filing.get("corp_cls"))
+        corp_code = clean(filing.get("corp_code"))
         # Listed KOSPI/KOSDAQ issuers' ordinary equity offerings are not IPOs.
-        if not receipt or receipt in seen or corp_class in {"Y", "K"}:
+        if not receipt or receipt in seen or not corp_code or corp_code in seen_corps or corp_class in {"Y", "K"}:
             continue
         seen.add(receipt)
+        seen_corps.add(corp_code)
         candidates.append(filing)
 
     def inspect(filing: dict) -> dict | None:
@@ -206,7 +208,7 @@ def build(key: str, today: date | None = None) -> dict:
         return None
 
     items = []
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=16) as pool:
         futures = {pool.submit(inspect, filing): filing for filing in candidates}
         for future in as_completed(futures):
             try:
