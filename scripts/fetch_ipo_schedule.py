@@ -8,6 +8,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.parse
 import urllib.request
 import zipfile
@@ -26,11 +27,23 @@ def clean(value: object) -> str:
     return re.sub(r"[<>\x00-\x1f]", " ", str(value or "")).strip()
 
 
+def urlopen_with_retry(request: urllib.request.Request, timeout: int = 60) -> bytes:
+    last_error = None
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return response.read()
+        except Exception as error:
+            last_error = error
+            if attempt < 3:
+                time.sleep(2 ** attempt)
+    raise RuntimeError("OpenDART request failed after retries") from last_error
+
+
 def api_json(path: str, params: dict[str, object]) -> dict:
     url = f"{API}/{path}?{urllib.parse.urlencode(params)}"
     request = urllib.request.Request(url, headers={"User-Agent": "ipo-record/1.0"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        data = json.load(response)
+    data = json.loads(urlopen_with_retry(request).decode("utf-8"))
     if data.get("status") not in (None, "000", "013"):
         raise RuntimeError(f"OpenDART {path}: {data.get('status')} {data.get('message')}")
     return data
@@ -85,8 +98,7 @@ def is_ipo_document(raw: bytes) -> bool:
 def fetch_document(key: str, receipt: str) -> bytes:
     query = urllib.parse.urlencode({"crtfc_key": key, "rcept_no": receipt})
     request = urllib.request.Request(f"{API}/document.xml?{query}", headers={"User-Agent": "ipo-record/1.0"})
-    with urllib.request.urlopen(request, timeout=40) as response:
-        return response.read()
+    return urlopen_with_retry(request)
 
 
 def normalize_broker(name: str) -> str:
@@ -185,7 +197,7 @@ def build(key: str, today: date | None = None) -> dict:
         return None
 
     items = []
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=4) as pool:
         futures = {pool.submit(inspect, filing): filing for filing in candidates}
         for future in as_completed(futures):
             try:
