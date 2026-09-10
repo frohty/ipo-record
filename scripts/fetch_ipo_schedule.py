@@ -8,10 +8,10 @@ import json
 import os
 import re
 import sys
-import time
 import urllib.parse
 import urllib.request
 import zipfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -153,7 +153,7 @@ def fetch_filings(key: str, begin: date, end: date) -> list[dict]:
 def build(key: str, today: date | None = None) -> dict:
     today = today or datetime.now(SEOUL).date()
     filings = fetch_filings(key, today - timedelta(days=LIST_LOOKBACK_DAYS), today)
-    items, seen = [], set()
+    candidates, seen = [], set()
     for filing in filings:
         receipt = clean(filing.get("rcept_no"))
         corp_class = clean(filing.get("corp_cls"))
@@ -161,6 +161,10 @@ def build(key: str, today: date | None = None) -> dict:
         if not receipt or receipt in seen or corp_class in {"Y", "K"}:
             continue
         seen.add(receipt)
+        candidates.append(filing)
+
+    def inspect(filing: dict) -> dict | None:
+        receipt = clean(filing.get("rcept_no"))
         corp_code = clean(filing.get("corp_code"))
         detail = api_json("estkRs.json", {
             "crtfc_key": key, "corp_code": corp_code,
@@ -168,17 +172,29 @@ def build(key: str, today: date | None = None) -> dict:
             "end_de": today.strftime("%Y%m%d"),
         })
         if detail.get("status") == "013":
-            continue
+            return None
         try:
             if not is_ipo_document(fetch_document(key, receipt)):
-                continue
+                return None
         except Exception as error:
             print(f"warning: skipped {receipt}; document check failed: {error}", file=sys.stderr)
-            continue
+            return None
         item = make_item(filing, detail)
         if item and date.fromisoformat(item["endDate"]) >= today - timedelta(days=14):
-            items.append(item)
-        time.sleep(0.08)
+            return item
+        return None
+
+    items = []
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        futures = {pool.submit(inspect, filing): filing for filing in candidates}
+        for future in as_completed(futures):
+            try:
+                item = future.result()
+                if item:
+                    items.append(item)
+            except Exception as error:
+                receipt = clean(futures[future].get("rcept_no"))
+                print(f"warning: skipped {receipt}; OpenDART request failed: {error}", file=sys.stderr)
     items.sort(key=lambda item: (item["date"], item["name"]))
     return {
         "schemaVersion": 1,
