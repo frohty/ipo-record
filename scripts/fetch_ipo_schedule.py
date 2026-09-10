@@ -117,7 +117,11 @@ def fetch_document(key: str, receipt: str) -> bytes:
 
 def normalize_broker(name: str) -> str:
     name = clean(name).replace("㈜", "").replace("주식회사", "").strip()
-    aliases = {"한국투자": "한국투자증권", "NH투자": "NH투자증권", "KB": "KB증권"}
+    aliases = {
+        "한국투자": "한국투자증권", "NH투자": "NH투자증권", "엔에이치투자증권": "NH투자증권",
+        "KB": "KB증권", "케이비증권": "KB증권", "아이비케이투자증권": "IBK투자증권",
+        "유진증권": "유진투자증권",
+    }
     return aliases.get(name, name)
 
 
@@ -144,8 +148,9 @@ def make_item(filing: dict, detail: dict) -> dict | None:
         "date": start,
         "endDate": end,
         "broker": ", ".join(brokers) or "주관사 확인 필요",
-        "price": prices[0] if len(set(prices)) == 1 else None,
-        "priceBand": "공시 확인 필요",
+        # OpenDART's slprc can be a proposed/assumed amount, not a confirmed IPO price.
+        "price": None,
+        "priceBand": " · ".join(f"{price:,}원" for price in sorted(set(prices))) + " (공시 표시값)" if prices else "공시 확인 필요",
         "listing": None,
         "industry": None,
         "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",

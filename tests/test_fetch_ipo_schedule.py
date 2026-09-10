@@ -33,7 +33,8 @@ class ScheduleTests(unittest.TestCase):
         ]}
         item = make_item(filing, detail)
         self.assertEqual(item["date"], "2026-09-10")
-        self.assertEqual(item["price"], 10000)
+        self.assertIsNone(item["price"])
+        self.assertEqual(item["priceBand"], "10,000원 (공시 표시값)")
         self.assertEqual(item["broker"], "NH투자증권")
 
     def test_item_uses_matching_receipt_after_correction(self):
@@ -48,7 +49,7 @@ class ScheduleTests(unittest.TestCase):
         ]}
         item = make_item(filing, detail)
         self.assertEqual(item["date"], "2026-09-10")
-        self.assertEqual(item["price"], 12000)
+        self.assertIsNone(item["price"])
 
 
 if __name__ == "__main__":
