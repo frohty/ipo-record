@@ -27,15 +27,15 @@ def clean(value: object) -> str:
     return re.sub(r"[<>\x00-\x1f]", " ", str(value or "")).strip()
 
 
-def urlopen_with_retry(request: urllib.request.Request, timeout: int = 60) -> bytes:
+def urlopen_with_retry(request: urllib.request.Request, timeout: int = 20) -> bytes:
     last_error = None
-    for attempt in range(4):
+    for attempt in range(2):
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 return response.read()
         except Exception as error:
             last_error = error
-            if attempt < 3:
+            if attempt < 1:
                 time.sleep(2 ** attempt)
     raise RuntimeError("OpenDART request failed after retries") from last_error
 
@@ -206,7 +206,7 @@ def build(key: str, today: date | None = None) -> dict:
         return None
 
     items = []
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(inspect, filing): filing for filing in candidates}
         for future in as_completed(futures):
             try:
