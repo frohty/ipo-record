@@ -164,7 +164,24 @@ function renderHome(){
   document.getElementById("home").innerHTML=`
     <div class="card">
       <div class="section-title"><strong>🗓 다가오는 공모주 일정</strong><button class="more" onclick="alert('자동 일정 연동은 2차 버전에서 연결할게요.')">더보기 ›</button></div>
-      ${schedule.map(s=>{let dd=Math.ceil((new Date(s.date+"T23:59:59")-now)/86400000);let tag=dd<=0?"오늘 시작":`D-${dd}`;return `<div class="schedule-row" onclick="showSchedule('${s.id}')"><div class="day">${s.date.slice(5).replace("-",".")}</div><div><b>${s.name}</b><div class="sub">${s.broker} · ${s.price?fmt(s.price):s.priceBand+" (확정 전)"}</div></div><span class="badge pink">${tag}</span></div>`}).join("")}
+      ${schedule.map(s=>{
+        const start=new Date(s.date+"T00:00:00");
+        const end=new Date(s.endDate+"T23:59:59");
+        const endStart=new Date(s.endDate+"T00:00:00");
+        let tag="", cls="pink";
+        if(now < start){
+          const dd=Math.ceil((start-now)/86400000);
+          tag=`D-${dd}`;
+        } else if(now.toDateString()===endStart.toDateString()){
+          tag="청약마감"; cls="yellow";
+        } else if(now <= end){
+          tag="청약중"; cls="green";
+        } else {
+          tag="청약종료"; cls="blue";
+        }
+        const period=s.date.slice(5).replace("-",".")+"~"+s.endDate.slice(8);
+        return `<div class="schedule-row" onclick="showSchedule('${s.id}')"><div class="day">${period}</div><div><b>${s.name}</b><div class="sub">${s.broker} · ${s.price?fmt(s.price):s.priceBand+" (확정 전)"}</div></div><span class="badge ${cls}">${tag}</span></div>`
+      }).join("")}
     </div>
     <div class="card">
       <div class="section-title"><strong>📈 현재 진행 중인 내 공모주</strong><button class="more" onclick="go('records')">더보기 ›</button></div>
