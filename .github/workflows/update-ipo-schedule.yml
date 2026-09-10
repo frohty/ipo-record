@@ -1,6 +1,12 @@
 name: Update IPO schedule
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/update-ipo-schedule.yml"
+      - "scripts/fetch_ipo_schedule.py"
+      - "tests/test_fetch_ipo_schedule.py"
   schedule:
     - cron: "15 22 * * *"
   workflow_dispatch:
