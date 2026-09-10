@@ -74,6 +74,20 @@ def groups(payload: dict) -> dict[str, list[dict]]:
     return result
 
 
+def rows_for_receipt(grouped: dict[str, list[dict]], title: str, receipt: str) -> list[dict]:
+    rows = grouped.get(title) or []
+    exact = [row for row in rows if clean(row.get("rcept_no")) == receipt]
+    return exact or rows
+
+
+def has_public_offering_structure(detail: dict, receipt: str) -> bool:
+    grouped = groups(detail)
+    securities = rows_for_receipt(grouped, "증권의종류", receipt)
+    underwriters = rows_for_receipt(grouped, "인수인정보", receipt)
+    methods = " ".join(clean(row.get("slmthn")) for row in securities)
+    return bool(underwriters) and ("공모" in methods or "모집" in methods)
+
+
 IPO_MARKERS = (
     "신규상장", "기업공개", "코스닥시장 상장", "유가증권시장 상장",
     "코넥스시장 상장", "상장을 목적으로", "상장예정",
@@ -110,15 +124,9 @@ def normalize_broker(name: str) -> str:
 def make_item(filing: dict, detail: dict) -> dict | None:
     grouped = groups(detail)
     receipt = clean(filing.get("rcept_no"))
-
-    def for_receipt(title: str) -> list[dict]:
-        rows = grouped.get(title) or []
-        exact = [row for row in rows if clean(row.get("rcept_no")) == receipt]
-        return exact or rows
-
-    general = (for_receipt("일반사항") or [{}])[0]
-    securities = for_receipt("증권의종류")
-    underwriters = for_receipt("인수인정보")
+    general = (rows_for_receipt(grouped, "일반사항", receipt) or [{}])[0]
+    securities = rows_for_receipt(grouped, "증권의종류", receipt)
+    underwriters = rows_for_receipt(grouped, "인수인정보", receipt)
     dates = parse_dates(general.get("sbd"))
     if not dates:
         return None
@@ -185,12 +193,13 @@ def build(key: str, today: date | None = None) -> dict:
         })
         if detail.get("status") == "013":
             return None
-        try:
-            if not is_ipo_document(fetch_document(key, receipt)):
+        if not has_public_offering_structure(detail, receipt):
+            try:
+                if not is_ipo_document(fetch_document(key, receipt)):
+                    return None
+            except Exception as error:
+                print(f"warning: skipped {receipt}; document check failed: {error}", file=sys.stderr)
                 return None
-        except Exception as error:
-            print(f"warning: skipped {receipt}; document check failed: {error}", file=sys.stderr)
-            return None
         item = make_item(filing, detail)
         if item and date.fromisoformat(item["endDate"]) >= today - timedelta(days=14):
             return item
