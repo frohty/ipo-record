@@ -19,6 +19,7 @@ API = "https://opendart.fss.or.kr/api"
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "ipo-schedule.json"
 SEOUL = timezone(timedelta(hours=9))
+LIST_LOOKBACK_DAYS = 89  # OpenDART limits company-less disclosure searches to 3 months.
 
 
 def clean(value: object) -> str:
@@ -151,7 +152,7 @@ def fetch_filings(key: str, begin: date, end: date) -> list[dict]:
 
 def build(key: str, today: date | None = None) -> dict:
     today = today or datetime.now(SEOUL).date()
-    filings = fetch_filings(key, today - timedelta(days=180), today)
+    filings = fetch_filings(key, today - timedelta(days=LIST_LOOKBACK_DAYS), today)
     items, seen = [], set()
     for filing in filings:
         receipt = clean(filing.get("rcept_no"))
