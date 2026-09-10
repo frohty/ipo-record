@@ -1,4 +1,4 @@
-const CACHE = 'ipo-record-shell-v1';
+const CACHE = 'ipo-record-shell-v2';
 const STATIC = [
   './manifest.json',
   './icon-192.png',
@@ -32,6 +32,12 @@ self.addEventListener('fetch', event => {
     req.mode === 'navigate' ||
     url.pathname.endsWith('/index.html') ||
     url.pathname.endsWith('/ipo-record/');
+
+  // Schedule data changes independently of the app shell.
+  if (url.pathname.endsWith('/ipo-schedule.json')) {
+    event.respondWith(fetch(req, { cache: 'no-store' }));
+    return;
+  }
 
   // Always try the newest page first when online.
   // This makes future index.html-only updates work.
