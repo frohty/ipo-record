@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-15T09:42:03+09:00",
+  "generatedAt": "2026-09-16T09:24:03+09:00",
   "source": "OpenDART",
   "notice": "공시 기준 자동 일정입니다. 상장일·업종은 OpenDART 제공 범위 밖이므로 공시 원문과 증권사에서 다시 확인하세요.",
   "items": [
     {
-      "id": "dart-20260909000317",
+      "id": "dart-20260915000379",
       "name": "네오사피엔스",
       "date": "2026-09-10",
       "endDate": "2026-09-11",
@@ -16,11 +16,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909000317",
-      "receiptNo": "20260909000317"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000379",
+      "receiptNo": "20260915000379"
     },
     {
-      "id": "dart-20260908000183",
+      "id": "dart-20260915000376",
       "name": "케이비제34호기업인수목적",
       "date": "2026-09-10",
       "endDate": "2026-09-11",
@@ -31,11 +31,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908000183",
-      "receiptNo": "20260908000183"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000376",
+      "receiptNo": "20260915000376"
     },
     {
-      "id": "dart-20260909000285",
+      "id": "dart-20260915000160",
       "name": "한국제17호기업인수목적",
       "date": "2026-09-10",
       "endDate": "2026-09-11",
@@ -46,8 +46,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909000285",
-      "receiptNo": "20260909000285"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000160",
+      "receiptNo": "20260915000160"
     },
     {
       "id": "dart-20260911000214",
@@ -80,7 +80,7 @@
       "receiptNo": "20260914000385"
     },
     {
-      "id": "dart-20260910000096",
+      "id": "dart-20260915000241",
       "name": "글로벌테크놀로지",
       "date": "2026-09-16",
       "endDate": "2026-09-17",
@@ -91,11 +91,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260910000096",
-      "receiptNo": "20260910000096"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000241",
+      "receiptNo": "20260915000241"
     },
     {
-      "id": "dart-20260908000047",
+      "id": "dart-20260915000085",
       "name": "덕산넵코어스",
       "date": "2026-09-16",
       "endDate": "2026-09-17",
@@ -106,8 +106,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908000047",
-      "receiptNo": "20260908000047"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000085",
+      "receiptNo": "20260915000085"
     },
     {
       "id": "dart-20260825000494",
@@ -243,6 +243,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260909000174",
       "receiptNo": "20260909000174"
+    },
+    {
+      "id": "dart-20260915000390",
+      "name": "다비오",
+      "date": "2026-10-19",
+      "endDate": "2026-10-20",
+      "broker": "대신증권",
+      "price": null,
+      "priceBand": "12,300원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000390",
+      "receiptNo": "20260915000390"
     },
     {
       "id": "dart-20260909000378",
