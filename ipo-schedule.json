@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-17T09:35:12+09:00",
+  "generatedAt": "2026-09-18T09:24:08+09:00",
   "source": "OpenDART",
   "notice": "공시 기준 자동 일정입니다. 상장일·업종은 OpenDART 제공 범위 밖이므로 공시 원문과 증권사에서 다시 확인하세요.",
   "items": [
@@ -50,7 +50,7 @@
       "receiptNo": "20260915000160"
     },
     {
-      "id": "dart-20260911000214",
+      "id": "dart-20260917000071",
       "name": "와이즈플래닛컴퍼니",
       "date": "2026-09-14",
       "endDate": "2026-09-15",
@@ -61,8 +61,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911000214",
-      "receiptNo": "20260911000214"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000071",
+      "receiptNo": "20260917000071"
     },
     {
       "id": "dart-20260914000385",
@@ -275,7 +275,7 @@
       "receiptNo": "20260909000378"
     },
     {
-      "id": "dart-20260904000286",
+      "id": "dart-20260917000141",
       "name": "크리에이츠",
       "date": "2026-10-20",
       "endDate": "2026-10-21",
@@ -286,8 +286,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260904000286",
-      "receiptNo": "20260904000286"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000141",
+      "receiptNo": "20260917000141"
     },
     {
       "id": "dart-20260903000275",
@@ -305,6 +305,21 @@
       "receiptNo": "20260903000275"
     },
     {
+      "id": "dart-20260917000365",
+      "name": "한화플러스제6호기업인수목적",
+      "date": "2026-10-20",
+      "endDate": "2026-10-21",
+      "broker": "한화투자증권",
+      "price": null,
+      "priceBand": "2,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000365",
+      "receiptNo": "20260917000365"
+    },
+    {
       "id": "dart-20260916000544",
       "name": "인텔리빅스",
       "date": "2026-10-21",
@@ -318,6 +333,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260916000544",
       "receiptNo": "20260916000544"
+    },
+    {
+      "id": "dart-20260917000220",
+      "name": "아이엠기업인수목적1호",
+      "date": "2026-10-26",
+      "endDate": "2026-10-27",
+      "broker": "아이엠증권",
+      "price": null,
+      "priceBand": "2,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000220",
+      "receiptNo": "20260917000220"
     },
     {
       "id": "dart-20260908000417",
