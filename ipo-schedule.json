@@ -1,24 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-20T09:13:11+09:00",
+  "generatedAt": "2026-09-21T09:20:15+09:00",
   "source": "OpenDART",
   "notice": "공시 기준 자동 일정입니다. 상장일·업종은 OpenDART 제공 범위 밖이므로 공시 원문과 증권사에서 다시 확인하세요.",
   "items": [
-    {
-      "id": "dart-20260915000379",
-      "name": "네오사피엔스",
-      "date": "2026-09-10",
-      "endDate": "2026-09-11",
-      "broker": "대신증권",
-      "price": null,
-      "priceBand": "13,800원 (공시 표시값)",
-      "listing": null,
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000379",
-      "receiptNo": "20260915000379"
-    },
     {
       "id": "dart-20260915000376",
       "name": "케이비제34호기업인수목적",
