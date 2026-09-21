@@ -55,6 +55,7 @@
     .calc{background:#fff3ed;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.7}
     .primary{width:100%;border:0;border-radius:13px;background:var(--accent);color:white;padding:13px;margin-top:14px;font-weight:800}
     .secondary{width:100%;border:1px solid var(--line);border-radius:13px;background:white;padding:12px;margin-top:8px}
+    .danger{width:100%;border:1px solid #e5a09a;border-radius:13px;background:#fff3f1;color:#b63f36;padding:12px;margin-top:8px;font-weight:800}
     .search{width:100%;border:1px solid var(--line);background:white;border-radius:14px;padding:12px 14px;margin:4px 0 10px}
     .empty{text-align:center;color:var(--muted);padding:28px 8px}
     .yearpick{display:flex;align-items:center;justify-content:center;gap:24px;font-size:22px;font-weight:800;margin:4px 0 12px}
@@ -139,7 +140,7 @@
       <label>매도가</label><input id="salePrice" type="number" min="0" placeholder="예: 33100">
       <label>실제 매도일</label><input id="saleDate" type="date">
       <label>실제 매매손익</label><input id="salePnl" type="number" placeholder="증권사 표시 손익">
-      <button class="primary" id="saleSaveButton" onclick="saveSale()">저장</button><button class="secondary" onclick="backActions()">뒤로</button>
+      <button class="primary" id="saleSaveButton" onclick="saveSale()">저장</button><button class="danger" id="saleDeleteButton" style="display:none" onclick="deleteSale()">매도내역 삭제</button><button class="secondary" onclick="backActions()">뒤로</button>
     </div>
   </div>
 </div>
@@ -195,9 +196,10 @@ function listingDateFor(r){
 function recordStatus(r){
   if(r.allocated===0)return "unallocated";
   if(r.allocated==null)return r.status||"waiting";
-  if((r.legacy&&r.status==="sold")||remain(r)===0)return "sold";
+  if(remain(r)===0)return "sold";
+  if(r.legacy&&r.status==="sold"&&(r.sales||[]).length&&(r.sales||[]).every(s=>s.qty==null))return "sold";
   const listing=listingDateFor(r);
-  if(!listing)return r.legacy?(r.status||"holding"):"listing";
+  if(!listing)return r.legacy?(r.status==="listing"?"listing":"holding"):"listing";
   if(localToday()<listing)return "listing";
   return "holding";
 }
@@ -389,7 +391,7 @@ function renderMore(){
  document.getElementById("more").innerHTML=`
  <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="go('brokerManage')">내 증권사 목록</button><div class="notice" style="margin-top:8px">활성/비활성 관리 · 하나증권은 혼합사용으로 등록</div></div>
  <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetAllData()">전체 기록 초기화</button></div>
- <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.5</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>전체 연도 통합검색 · 상장일 미확인 종목은 상장대기 유지 · 매도내역 개별 수정 적용.<br>청약정보는 OpenDART, 상장예정일은 한국거래소 KIND로 매일 교차 확인합니다.</div></div>`;
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.6</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>매도내역 개별 수정·삭제 · 전체 연도 통합검색 · 상장일 기준 상태 전환 적용.<br>청약정보는 OpenDART, 상장예정일은 한국거래소 KIND로 매일 교차 확인합니다.</div></div>`;
 }
 
 let currentScreen="home";
@@ -456,6 +458,7 @@ function resetSaleForm(){
  editingSaleRecordId=null;editingSaleIndex=-1;
  document.getElementById("saleFormTitle").textContent="매도 기록하기";
  document.getElementById("saleSaveButton").textContent="저장";
+ document.getElementById("saleDeleteButton").style.display="none";
  document.getElementById("saleStock").disabled=false;
  document.getElementById("saleQty").value="";
  document.getElementById("salePrice").value="";
@@ -480,6 +483,7 @@ function editSale(recordId,index){
  editingSaleRecordId=recordId;editingSaleIndex=index;populateForms();
  const stock=document.getElementById("saleStock");stock.innerHTML=`<option value="${r.id}">${r.name}</option>`;stock.value=r.id;stock.disabled=true;
  document.getElementById("saleFormTitle").textContent="매도내역 수정";document.getElementById("saleSaveButton").textContent="수정 저장";
+ document.getElementById("saleDeleteButton").style.display="block";
  document.getElementById("saleQty").value=s.qty??"";document.getElementById("salePrice").value=s.price??"";document.getElementById("saleDate").value=s.date||"";document.getElementById("salePnl").value=s.pnl??"";
  pushSheetHistory();document.getElementById("sheetback").classList.add("show");showForm("saleForm",true);
 }
@@ -491,6 +495,13 @@ function saveSale(){
  if(editingSaleIndex>=0)r.sales[editingSaleIndex]=sale;else r.sales.push(sale);
  applyRecordStatus(r);persist();const edited=editingSaleIndex>=0;editingSaleRecordId=null;editingSaleIndex=-1;closeSheet();
  if(edited)openDetail(r.id,{replace:true});else renderHome();alert(`${edited?"매도내역 수정":"매도 기록 저장"} 완료\n남은 수량 ${remain(r)}주`)
+}
+function deleteSale(){
+ const r=records.find(x=>x.id===editingSaleRecordId),index=editingSaleIndex;
+ if(!r||index<0||!r.sales?.[index])return alert("삭제할 매도내역을 찾지 못했어요.");
+ if(!confirm(`${r.name}의 ${index+1}차 매도내역을 삭제할까요?\n다른 매도내역은 그대로 유지됩니다.`))return;
+ r.sales.splice(index,1);applyRecordStatus(r);persist();editingSaleRecordId=null;editingSaleIndex=-1;closeSheet();openDetail(r.id,{replace:true});
+ alert(`매도내역을 삭제했어요.\n현재 보유수량 ${remain(r)}주`);
 }
 function backup(){const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),records},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="ipo-record-backup.json";a.click();URL.revokeObjectURL(a.href)}
 function restoreFile(f){if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!Array.isArray(d.records))throw Error();records=d.records;persist();renderHome();renderMore();alert("복원했어요.")}catch(e){alert("올바른 백업 파일이 아니에요.")}};rd.readAsText(f)}

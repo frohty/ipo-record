@@ -17,6 +17,7 @@ assert.equal(context.recordStatus({ allocated: 10, listingDate: "2000-01-01", sa
 assert.equal(context.remain({ allocated: 10, sales: [{ qty: 5 }, { qty: 2 }] }), 3);
 assert.equal(context.recordStatus({ allocated: 10, sales: [{ qty: 5 }, { qty: 5 }] }), "sold");
 assert.equal(context.recordStatus({ allocated: 10, legacy: true, status: "sold", sales: [{ qty: null }] }), "sold");
+assert.equal(context.recordStatus({ allocated: 150, legacy: true, status: "sold", sales: [] }), "holding");
 
 assert(html.includes('r.sales[editingSaleIndex]=sale'), "existing sale must be replaced by index");
 assert(html.includes('else r.sales.push(sale)'), "new split sale must append");
@@ -30,5 +31,8 @@ assert(html.includes('if(sheet.classList.contains("show"))closeSheet(true)'), "b
 assert(html.includes('if(!fromHistory&&history.state?.sheet)history.back()'), "closing a popup must consume its history state");
 assert(html.includes('records.filter(r=>`${r.name} ${r.broker} ${r.year}`'), "record search must cover every year, stock and broker");
 assert(html.includes('전체 연도 검색 결과 ${arr.length}건'), "global search results must identify their scope");
+assert(html.includes('r.sales.splice(index,1)'), "sale deletion must remove only the selected sale");
+assert(html.includes('applyRecordStatus(r);persist()'), "sale deletion must recalculate status and persist immediately");
+assert(html.includes('id="saleDeleteButton"'), "sale editing form must expose a delete action");
 
 console.log("app status and sale logic OK");
