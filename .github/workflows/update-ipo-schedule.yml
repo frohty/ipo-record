@@ -32,7 +32,9 @@ jobs:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
         run: python scripts/fetch_ipo_schedule.py
       - name: Validate generated data
-        run: python -m unittest discover -s tests -v
+        run: |
+          python -m unittest discover -s tests -v
+          node tests/test_app_logic.js
       - name: Save changed schedule
         run: |
           if git diff --quiet -- ipo-schedule.json; then
