@@ -18,6 +18,7 @@ assert.equal(context.recordStatus({ allocated: 10, legacy: true, status: "sold",
 
 assert(html.includes('r.sales[editingSaleIndex]=sale'), "existing sale must be replaced by index");
 assert(html.includes('else r.sales.push(sale)'), "new split sale must append");
+assert(!html.includes('!r.legacy||s.date||s.qty!=null'), "every legacy sale must expose its edit button");
 assert(html.includes('document.getElementById("salePnl").value=""'), "new sale PnL must reset");
 assert(html.includes('pnlText===""?null:Number(pnlText)'), "blank PnL must remain editable/null");
 assert(html.includes('listingDate:s.listing||null'), "schedule listing date must be linked to a new record");

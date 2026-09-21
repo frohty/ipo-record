@@ -323,7 +323,7 @@ function changeYear(d){currentYear=Math.min(2035,Math.max(2023,currentYear+d));r
 
 function openDetail(id,opts={}){
  const r=records.find(x=>x.id===id); if(!r)return;
- const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`${s.pnl>=0?"+":""}${fmt(s.pnl)}`}</small>${!r.legacy||s.date||s.qty!=null?`<button class="more" style="margin-top:6px" onclick="editSale('${r.id}',${i})">수정</button>`:""}</div>`).join("");
+ const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`${s.pnl>=0?"+":""}${fmt(s.pnl)}`}</small><button class="more" style="margin-top:6px" onclick="editSale('${r.id}',${i})">수정</button></div>`).join("");
  document.getElementById("detail").innerHTML=`
    <div class="card"><div class="section-title"><strong>${r.name}</strong>${statusBadge(r)}</div><div class="sub">${r.broker} · ${r.year}년 공모주</div></div>
    <div class="card"><strong>기본정보</strong>
@@ -383,7 +383,7 @@ function renderMore(){
  document.getElementById("more").innerHTML=`
  <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="go('brokerManage')">내 증권사 목록</button><div class="notice" style="margin-top:8px">활성/비활성 관리 · 하나증권은 혼합사용으로 등록</div></div>
  <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetAllData()">전체 기록 초기화</button></div>
- <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>상장일 기준 상태 전환 · 매도내역 개별 수정 · 분할매도 · 앱 뒤로가기 이동 적용.<br>공모주 일정은 OpenDART 공시를 기준으로 매일 자동 갱신됩니다.</div></div>`;
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.1</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>모든 기존 매도내역 개별 수정 · 상장일 기준 상태 전환 · 분할매도 · 앱 뒤로가기 이동 적용.<br>공모주 일정은 OpenDART 공시를 기준으로 매일 자동 갱신됩니다.</div></div>`;
 }
 
 let currentScreen="home";
