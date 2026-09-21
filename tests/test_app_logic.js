@@ -22,5 +22,9 @@ assert(!html.includes('!r.legacy||s.date||s.qty!=null'), "every legacy sale must
 assert(html.includes('document.getElementById("salePnl").value=""'), "new sale PnL must reset");
 assert(html.includes('pnlText===""?null:Number(pnlText)'), "blank PnL must remain editable/null");
 assert(html.includes('listingDate:s.listing||null'), "schedule listing date must be linked to a new record");
+assert(html.includes('class="edit-sale-btn"'), "sale edit action must use the visible button style");
+assert(html.includes('sheet:true'), "opening a popup must create a popup history state");
+assert(html.includes('if(sheet.classList.contains("show"))closeSheet(true)'), "browser back must close the popup before rendering the underlying screen");
+assert(html.includes('if(!fromHistory&&history.state?.sheet)history.back()'), "closing a popup must consume its history state");
 
 console.log("app status and sale logic OK");

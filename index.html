@@ -25,6 +25,7 @@
     .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
     .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .section-title strong{font-size:16px}.more{border:0;background:transparent;color:var(--muted);font-size:13px}
+    .edit-sale-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;padding:8px 14px;border:1px solid #ef8d83;border-radius:10px;background:#fff0ed;color:#bd463d;font-size:13px;font-weight:800;box-shadow:0 2px 6px rgba(189,70,61,.12);cursor:pointer}
     .schedule-row,.record-row,.broker-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #f0e7df}
     .schedule-row:first-of-type,.record-row:first-of-type,.broker-row:first-of-type{border-top:0}
     .day{font-weight:800;min-width:52px}.sub{font-size:12px;color:var(--muted);margin-top:3px}
@@ -323,7 +324,7 @@ function changeYear(d){currentYear=Math.min(2035,Math.max(2023,currentYear+d));r
 
 function openDetail(id,opts={}){
  const r=records.find(x=>x.id===id); if(!r)return;
- const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`${s.pnl>=0?"+":""}${fmt(s.pnl)}`}</small><button class="more" style="margin-top:6px" onclick="editSale('${r.id}',${i})">수정</button></div>`).join("");
+ const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`${s.pnl>=0?"+":""}${fmt(s.pnl)}`}</small><button class="edit-sale-btn" onclick="editSale('${r.id}',${i})">✏️ 매도내역 수정</button></div>`).join("");
  document.getElementById("detail").innerHTML=`
    <div class="card"><div class="section-title"><strong>${r.name}</strong>${statusBadge(r)}</div><div class="sub">${r.broker} · ${r.year}년 공모주</div></div>
    <div class="card"><strong>기본정보</strong>
@@ -383,7 +384,7 @@ function renderMore(){
  document.getElementById("more").innerHTML=`
  <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="go('brokerManage')">내 증권사 목록</button><div class="notice" style="margin-top:8px">활성/비활성 관리 · 하나증권은 혼합사용으로 등록</div></div>
  <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetAllData()">전체 기록 초기화</button></div>
- <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.1</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>모든 기존 매도내역 개별 수정 · 상장일 기준 상태 전환 · 분할매도 · 앱 뒤로가기 이동 적용.<br>공모주 일정은 OpenDART 공시를 기준으로 매일 자동 갱신됩니다.</div></div>`;
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.2</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>눈에 띄는 매도내역 수정 버튼 · 팝업 우선 뒤로가기 · 상장일 기준 상태 전환 · 분할매도 적용.<br>공모주 일정은 OpenDART 공시를 기준으로 매일 자동 갱신됩니다.</div></div>`;
 }
 
 let currentScreen="home";
@@ -413,8 +414,6 @@ function go(name, opts={}){
 function appBack(){
  const sheet=document.getElementById("sheetback");
  if(sheet.classList.contains("show")){
-   const formOpen=[...document.querySelectorAll(".form")].some(x=>x.classList.contains("show"));
-   if(formOpen){backActions();return;}
    closeSheet();return;
  }
  history.back();
@@ -422,6 +421,8 @@ function appBack(){
 
 window.addEventListener("popstate",e=>{
  const st=e.state;
+ const sheet=document.getElementById("sheetback");
+ if(sheet.classList.contains("show"))closeSheet(true);
  if(st&&st.app){
    if(st.broker)selectedBroker=st.broker;
    if(st.year)currentYear=st.year;
@@ -443,8 +444,9 @@ function initNavigation(){
 
 let editingSaleRecordId=null;
 let editingSaleIndex=-1;
-function openSheet(){editingSaleRecordId=null;editingSaleIndex=-1;populateForms();document.getElementById("sheetback").classList.add("show");backActions()}
-function closeSheet(){document.getElementById("sheetback").classList.remove("show")}
+function pushSheetHistory(){if(!history.state?.sheet)history.pushState({app:true,screen:currentScreen,broker:selectedBroker||null,year:currentYear,sheet:true},"",location.hash)}
+function openSheet(){editingSaleRecordId=null;editingSaleIndex=-1;populateForms();pushSheetHistory();document.getElementById("sheetback").classList.add("show");backActions()}
+function closeSheet(fromHistory=false){document.getElementById("sheetback").classList.remove("show");if(!fromHistory&&history.state?.sheet)history.back()}
 function resetSaleForm(){
  editingSaleRecordId=null;editingSaleIndex=-1;
  document.getElementById("saleFormTitle").textContent="매도 기록하기";
@@ -474,7 +476,7 @@ function editSale(recordId,index){
  const stock=document.getElementById("saleStock");stock.innerHTML=`<option value="${r.id}">${r.name}</option>`;stock.value=r.id;stock.disabled=true;
  document.getElementById("saleFormTitle").textContent="매도내역 수정";document.getElementById("saleSaveButton").textContent="수정 저장";
  document.getElementById("saleQty").value=s.qty??"";document.getElementById("salePrice").value=s.price??"";document.getElementById("saleDate").value=s.date||"";document.getElementById("salePnl").value=s.pnl??"";
- document.getElementById("sheetback").classList.add("show");showForm("saleForm",true);
+ pushSheetHistory();document.getElementById("sheetback").classList.add("show");showForm("saleForm",true);
 }
 function saveSale(){
  const recordId=editingSaleRecordId||document.getElementById("saleStock").value,r=records.find(x=>x.id===recordId);if(!r)return alert("보유 종목이 없어요.");
