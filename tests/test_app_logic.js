@@ -28,5 +28,7 @@ assert(html.includes('class="edit-sale-btn"'), "sale edit action must use the vi
 assert(html.includes('sheet:true'), "opening a popup must create a popup history state");
 assert(html.includes('if(sheet.classList.contains("show"))closeSheet(true)'), "browser back must close the popup before rendering the underlying screen");
 assert(html.includes('if(!fromHistory&&history.state?.sheet)history.back()'), "closing a popup must consume its history state");
+assert(html.includes('records.filter(r=>`${r.name} ${r.broker} ${r.year}`'), "record search must cover every year, stock and broker");
+assert(html.includes('전체 연도 검색 결과 ${arr.length}건'), "global search results must identify their scope");
 
 console.log("app status and sale logic OK");
