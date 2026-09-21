@@ -14,9 +14,11 @@ import urllib.request
 import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
+from html.parser import HTMLParser
 from pathlib import Path
 
 API = "https://opendart.fss.or.kr/api"
+KIND_URL = "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do"
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "ipo-schedule.json"
 SEOUL = timezone(timedelta(hours=9))
@@ -65,6 +67,102 @@ def parse_dates(value: object) -> list[str]:
 def parse_money(value: object) -> int | None:
     digits = re.sub(r"[^0-9]", "", str(value or ""))
     return int(digits) if digits else None
+
+
+def company_key(value: object) -> str:
+    text = clean(value).lower()
+    text = re.sub(r"주식회사|\(주\)|㈜", "", text)
+    return re.sub(r"[^0-9a-z가-힣]", "", text)
+
+
+def spac_key(value: object) -> str | None:
+    text = company_key(value).replace("기업인수목적", "스팩")
+    if "스팩" not in text:
+        return None
+    number = re.search(r"(\d+)호", text)
+    prefix = re.sub(r"제?\d+호|스팩", "", text)
+    prefix = {"케이비": "kb", "에스케이증권": "sk", "아이비케이": "ibk"}.get(prefix, prefix)
+    return f"{prefix}:{number.group(1) if number else ''}"
+
+
+class KindTableParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.rows: list[list[str]] = []
+        self.row: list[str] | None = None
+        self.cell: list[str] | None = None
+        self.cell_title = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = dict(attrs)
+        if tag == "tr" and "fnDetailView" in (attributes.get("onclick") or ""):
+            self.row = []
+        elif tag == "td" and self.row is not None:
+            self.cell = []
+            self.cell_title = attributes.get("title") or ""
+
+    def handle_data(self, data: str) -> None:
+        if self.cell is not None:
+            self.cell.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "td" and self.row is not None and self.cell is not None:
+            value = self.cell_title or " ".join(self.cell)
+            self.row.append(re.sub(r"\s+", " ", value).strip())
+            self.cell = None
+            self.cell_title = ""
+        elif tag == "tr" and self.row is not None:
+            if len(self.row) >= 9:
+                self.rows.append(self.row)
+            self.row = None
+
+
+def parse_kind_offerings(raw: bytes) -> list[dict]:
+    parser = KindTableParser()
+    parser.feed(raw.decode("utf-8", "replace"))
+    offerings = []
+    for row in parser.rows:
+        subscription = parse_dates(row[3])
+        listing = parse_dates(row[7])
+        if subscription and listing:
+            offerings.append({
+                "name": row[0], "date": subscription[0],
+                "endDate": subscription[-1], "listing": listing[0],
+                "broker": row[8],
+            })
+    return offerings
+
+
+def fetch_kind_offerings(today: date) -> list[dict]:
+    params = {
+        "method": "searchPubofrProgComSub", "forward": "pubofrprogcom_sub",
+        "currentPageSize": "500", "pageIndex": "1", "orderMode": "1", "orderStat": "D",
+        "marketType": "", "fromDate": (today - timedelta(days=365)).isoformat(),
+        "toDate": (today + timedelta(days=180)).isoformat(), "searchCorpName": "",
+        "isurCd": "", "repMajAgntDesignAdvserComp": "",
+    }
+    request = urllib.request.Request(
+        KIND_URL, data=urllib.parse.urlencode(params).encode(),
+        headers={"User-Agent": "ipo-record/1.0", "Content-Type": "application/x-www-form-urlencoded"},
+    )
+    return parse_kind_offerings(urlopen_with_retry(request))
+
+
+def add_kind_listing_dates(items: list[dict], offerings: list[dict]) -> int:
+    matched = 0
+    for item in items:
+        item_key, item_spac = company_key(item["name"]), spac_key(item["name"])
+        candidates = [offer for offer in offerings if company_key(offer["name"]) == item_key]
+        if not candidates and item_spac:
+            candidates = [offer for offer in offerings if spac_key(offer["name"]) == item_spac]
+        exact = [offer for offer in candidates if offer["date"] == item["date"] and offer["endDate"] == item["endDate"]]
+        if len(exact) == 1:
+            offer = exact[0]
+            item["listing"] = offer["listing"]
+            item["listingSource"] = "KIND"
+            item["kindUrl"] = "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
+            matched += 1
+    return matched
 
 
 def groups(payload: dict) -> dict[str, list[dict]]:
@@ -224,11 +322,17 @@ def build(key: str, today: date | None = None) -> dict:
                 receipt = clean(futures[future].get("rcept_no"))
                 print(f"warning: skipped {receipt}; OpenDART request failed: {error}", file=sys.stderr)
     items.sort(key=lambda item: (item["date"], item["name"]))
+    try:
+        offerings = fetch_kind_offerings(today)
+        matched = add_kind_listing_dates(items, offerings)
+        print(f"matched {matched}/{len(items)} KIND listing dates")
+    except Exception as error:
+        print(f"warning: KIND listing-date lookup failed: {error}", file=sys.stderr)
     return {
         "schemaVersion": 1,
         "generatedAt": datetime.now(SEOUL).isoformat(timespec="seconds"),
-        "source": "OpenDART",
-        "notice": "공시 기준 자동 일정입니다. 상장일·업종은 OpenDART 제공 범위 밖이므로 공시 원문과 증권사에서 다시 확인하세요.",
+        "source": "OpenDART + KIND",
+        "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
         "items": items,
     }
 

@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from fetch_ipo_schedule import has_public_offering_structure, is_ipo_document, make_item, parse_dates, parse_money
+from fetch_ipo_schedule import add_kind_listing_dates, company_key, has_public_offering_structure, is_ipo_document, make_item, parse_dates, parse_kind_offerings, parse_money, spac_key
 
 
 class ScheduleTests(unittest.TestCase):
@@ -50,6 +50,28 @@ class ScheduleTests(unittest.TestCase):
         item = make_item(filing, detail)
         self.assertEqual(item["date"], "2026-09-10")
         self.assertIsNone(item["price"])
+
+    def test_kind_table_and_verified_match(self):
+        html = '''<table><tr onclick="fnDetailView('1')">
+        <td title="테스트">test</td><td>2026-09-01</td><td>2026-09-02 ~ 2026-09-03</td>
+        <td>2026-09-10<br/> ~ 2026-09-11</td><td>2026-09-15</td><td>10,000</td><td>20,000</td>
+        <td>2026-09-21</td><td>KB증권(주)</td></tr></table>'''.encode()
+        offers = parse_kind_offerings(html)
+        self.assertEqual(offers[0]["listing"], "2026-09-21")
+        items = [{"name": "테스트", "date": "2026-09-10", "endDate": "2026-09-11", "listing": None}]
+        self.assertEqual(add_kind_listing_dates(items, offers), 1)
+        self.assertEqual(items[0]["listing"], "2026-09-21")
+
+    def test_kind_match_requires_same_subscription_period(self):
+        items = [{"name": "테스트", "date": "2026-09-12", "endDate": "2026-09-13", "listing": None}]
+        offers = [{"name": "테스트", "date": "2026-09-10", "endDate": "2026-09-11", "listing": "2026-09-21"}]
+        self.assertEqual(add_kind_listing_dates(items, offers), 0)
+        self.assertIsNone(items[0]["listing"])
+
+    def test_company_and_spac_normalization(self):
+        self.assertEqual(company_key("(주) 테스트"), company_key("테스트 주식회사"))
+        self.assertEqual(spac_key("KB제34호스팩"), spac_key("KB스팩34호"))
+        self.assertEqual(spac_key("케이비제34호기업인수목적"), spac_key("KB제34호스팩"))
 
 
 if __name__ == "__main__":
