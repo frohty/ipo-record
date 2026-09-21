@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-21T09:20:15+09:00",
+  "generatedAt": "2026-09-21T20:30:42+09:00",
   "source": "OpenDART",
   "notice": "공시 기준 자동 일정입니다. 상장일·업종은 OpenDART 제공 범위 밖이므로 공시 원문과 증권사에서 다시 확인하세요.",
   "items": [
@@ -65,7 +65,7 @@
       "receiptNo": "20260918000412"
     },
     {
-      "id": "dart-20260915000241",
+      "id": "dart-20260921000349",
       "name": "글로벌테크놀로지",
       "date": "2026-09-16",
       "endDate": "2026-09-17",
@@ -76,11 +76,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000241",
-      "receiptNo": "20260915000241"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000349",
+      "receiptNo": "20260921000349"
     },
     {
-      "id": "dart-20260915000085",
+      "id": "dart-20260921000143",
       "name": "덕산넵코어스",
       "date": "2026-09-16",
       "endDate": "2026-09-17",
@@ -91,8 +91,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260915000085",
-      "receiptNo": "20260915000085"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000143",
+      "receiptNo": "20260921000143"
     },
     {
       "id": "dart-20260916000240",
@@ -140,7 +140,7 @@
       "receiptNo": "20260911000530"
     },
     {
-      "id": "dart-20260904000517",
+      "id": "dart-20260921000386",
       "name": "엘리스그룹",
       "date": "2026-10-07",
       "endDate": "2026-10-08",
@@ -151,23 +151,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260904000517",
-      "receiptNo": "20260904000517"
-    },
-    {
-      "id": "dart-20260825000318",
-      "name": "래블업",
-      "date": "2026-10-12",
-      "endDate": "2026-10-13",
-      "broker": "NH투자증권",
-      "price": null,
-      "priceBand": "20,000원 (공시 표시값)",
-      "listing": null,
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260825000318",
-      "receiptNo": "20260825000318"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000386",
+      "receiptNo": "20260921000386"
     },
     {
       "id": "dart-20260907000305",
@@ -305,6 +290,51 @@
       "receiptNo": "20260916000544"
     },
     {
+      "id": "dart-20260921000390",
+      "name": "래블업",
+      "date": "2026-10-22",
+      "endDate": "2026-10-23",
+      "broker": "NH투자증권",
+      "price": null,
+      "priceBand": "19,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000390",
+      "receiptNo": "20260921000390"
+    },
+    {
+      "id": "dart-20260921000332",
+      "name": "영광",
+      "date": "2026-10-22",
+      "endDate": "2026-10-23",
+      "broker": "한국투자증권",
+      "price": null,
+      "priceBand": "14,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000332",
+      "receiptNo": "20260921000332"
+    },
+    {
+      "id": "dart-20260921000211",
+      "name": "이에스티",
+      "date": "2026-10-22",
+      "endDate": "2026-10-23",
+      "broker": "대신증권",
+      "price": null,
+      "priceBand": "10,600원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000211",
+      "receiptNo": "20260921000211"
+    },
+    {
       "id": "dart-20260917000220",
       "name": "아이엠기업인수목적1호",
       "date": "2026-10-26",
@@ -318,6 +348,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000220",
       "receiptNo": "20260917000220"
+    },
+    {
+      "id": "dart-20260921000209",
+      "name": "에이엘로봇",
+      "date": "2026-10-26",
+      "endDate": "2026-10-27",
+      "broker": "대신증권",
+      "price": null,
+      "priceBand": "15,700원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000209",
+      "receiptNo": "20260921000209"
     },
     {
       "id": "dart-20260918000439",
@@ -348,6 +393,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908000417",
       "receiptNo": "20260908000417"
+    },
+    {
+      "id": "dart-20260921000405",
+      "name": "하나에어로다이내믹스",
+      "date": "2026-11-10",
+      "endDate": "2026-11-11",
+      "broker": "IBK투자증권",
+      "price": null,
+      "priceBand": "4,700원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000405",
+      "receiptNo": "20260921000405"
     }
   ]
 }
