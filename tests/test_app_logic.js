@@ -11,6 +11,8 @@ vm.runInContext(logic, context);
 assert.equal(context.recordStatus({ allocated: 0, status: "waiting", sales: [] }), "unallocated");
 assert.equal(context.recordStatus({ allocated: 10, listingDate: "2999-01-01", sales: [] }), "listing");
 assert.equal(context.recordStatus({ allocated: 10, listingDate: "2000-01-01", sales: [] }), "holding");
+assert.equal(context.recordStatus({ allocated: 10, listingDate: null, status: "holding", sales: [] }), "listing");
+assert.equal(context.recordStatus({ allocated: 10, legacy: true, listingDate: null, status: "holding", sales: [] }), "holding");
 assert.equal(context.recordStatus({ allocated: 10, listingDate: "2000-01-01", sales: [{ qty: 5 }] }), "holding");
 assert.equal(context.remain({ allocated: 10, sales: [{ qty: 5 }, { qty: 2 }] }), 3);
 assert.equal(context.recordStatus({ allocated: 10, sales: [{ qty: 5 }, { qty: 5 }] }), "sold");
