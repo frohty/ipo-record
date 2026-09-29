@@ -1,43 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T09:50:56+09:00",
+  "generatedAt": "2026-09-29T11:00:38+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
-    {
-      "id": "dart-20260918000412",
-      "name": "빅웨이브로보틱스",
-      "date": "2026-09-15",
-      "endDate": "2026-09-16",
-      "broker": "유진투자증권, 미래에셋증권",
-      "price": null,
-      "priceBand": "15,000원 (공시 표시값)",
-      "listing": "2026-09-29",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260918000412",
-      "receiptNo": "20260918000412",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
-    {
-      "id": "dart-20260921000349",
-      "name": "글로벌테크놀로지",
-      "date": "2026-09-16",
-      "endDate": "2026-09-17",
-      "broker": "한국투자증권",
-      "price": null,
-      "priceBand": "13,000원 (공시 표시값)",
-      "listing": "2026-09-29",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000349",
-      "receiptNo": "20260921000349",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
     {
       "id": "dart-20260921000143",
       "name": "덕산넵코어스",
@@ -88,7 +54,7 @@
       "receiptNo": "20260914000034"
     },
     {
-      "id": "dart-20260911000530",
+      "id": "dart-20260928000394",
       "name": "진코스텍",
       "date": "2026-10-02",
       "endDate": "2026-10-06",
@@ -99,8 +65,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260911000530",
-      "receiptNo": "20260911000530"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000394",
+      "receiptNo": "20260928000394"
     },
     {
       "id": "dart-20260921000386",
@@ -193,7 +159,7 @@
       "receiptNo": "20260909000378"
     },
     {
-      "id": "dart-20260917000141",
+      "id": "dart-20260928000196",
       "name": "크리에이츠",
       "date": "2026-10-20",
       "endDate": "2026-10-21",
@@ -204,11 +170,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260917000141",
-      "receiptNo": "20260917000141"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000196",
+      "receiptNo": "20260928000196"
     },
     {
-      "id": "dart-20260923000255",
+      "id": "dart-20260929000002",
       "name": "티앤이코리아",
       "date": "2026-10-20",
       "endDate": "2026-10-21",
@@ -219,8 +185,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260923000255",
-      "receiptNo": "20260923000255"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000002",
+      "receiptNo": "20260929000002"
     },
     {
       "id": "dart-20260917000365",
@@ -356,6 +322,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908000417",
       "receiptNo": "20260908000417"
+    },
+    {
+      "id": "dart-20260928000260",
+      "name": "넥스아이",
+      "date": "2026-11-03",
+      "endDate": "2026-11-04",
+      "broker": "한국투자증권",
+      "price": null,
+      "priceBand": "10,500원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000260",
+      "receiptNo": "20260928000260"
     },
     {
       "id": "dart-20260921000405",
