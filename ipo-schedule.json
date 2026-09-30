@@ -1,26 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-29T11:00:38+09:00",
+  "generatedAt": "2026-09-30T10:21:15+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
-    {
-      "id": "dart-20260921000143",
-      "name": "덕산넵코어스",
-      "date": "2026-09-16",
-      "endDate": "2026-09-17",
-      "broker": "대신증권",
-      "price": null,
-      "priceBand": "12,400원 (공시 표시값)",
-      "listing": "2026-09-30",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000143",
-      "receiptNo": "20260921000143",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
     {
       "id": "dart-20260922000214",
       "name": "브릴스",
@@ -39,7 +22,7 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20260914000034",
+      "id": "dart-20260929000194",
       "name": "멜콘",
       "date": "2026-10-01",
       "endDate": "2026-10-02",
@@ -50,11 +33,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260914000034",
-      "receiptNo": "20260914000034"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000194",
+      "receiptNo": "20260929000194"
     },
     {
-      "id": "dart-20260928000394",
+      "id": "dart-20260929000220",
       "name": "진코스텍",
       "date": "2026-10-02",
       "endDate": "2026-10-06",
@@ -65,11 +48,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000394",
-      "receiptNo": "20260928000394"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000220",
+      "receiptNo": "20260929000220"
     },
     {
-      "id": "dart-20260921000386",
+      "id": "dart-20260930000007",
       "name": "엘리스그룹",
       "date": "2026-10-07",
       "endDate": "2026-10-08",
@@ -80,11 +63,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000386",
-      "receiptNo": "20260921000386"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260930000007",
+      "receiptNo": "20260930000007"
     },
     {
-      "id": "dart-20260907000305",
+      "id": "dart-20260929000496",
       "name": "엠에스바이오",
       "date": "2026-10-12",
       "endDate": "2026-10-13",
@@ -95,8 +78,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260907000305",
-      "receiptNo": "20260907000305"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000496",
+      "receiptNo": "20260929000496"
     },
     {
       "id": "dart-20260911000314",
@@ -159,7 +142,7 @@
       "receiptNo": "20260909000378"
     },
     {
-      "id": "dart-20260928000196",
+      "id": "dart-20260930000017",
       "name": "크리에이츠",
       "date": "2026-10-20",
       "endDate": "2026-10-21",
@@ -170,8 +153,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000196",
-      "receiptNo": "20260928000196"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260930000017",
+      "receiptNo": "20260930000017"
     },
     {
       "id": "dart-20260929000002",
@@ -337,6 +320,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260928000260",
       "receiptNo": "20260928000260"
+    },
+    {
+      "id": "dart-20260929000347",
+      "name": "옵토닉스",
+      "date": "2026-11-05",
+      "endDate": "2026-11-06",
+      "broker": "한국투자증권",
+      "price": null,
+      "priceBand": "10,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000347",
+      "receiptNo": "20260929000347"
     },
     {
       "id": "dart-20260921000405",
