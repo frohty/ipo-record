@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-12T10:21:54+09:00",
+  "generatedAt": "2026-10-13T12:05:55+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
@@ -71,19 +71,21 @@
       "receiptNo": "20261007000328"
     },
     {
-      "id": "dart-20261008000030",
+      "id": "dart-20261012000323",
       "name": "디티에스",
       "date": "2026-10-13",
       "endDate": "2026-10-14",
       "broker": "대신증권, 유진투자증권",
       "price": null,
       "priceBand": "17,000원 (공시 표시값)",
-      "listing": null,
+      "listing": "2026-10-23",
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261008000030",
-      "receiptNo": "20261008000030"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261012000323",
+      "receiptNo": "20261012000323",
+      "listingSource": "KIND",
+      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
       "id": "dart-20260917000001",
@@ -236,21 +238,6 @@
       "receiptNo": "20261008000225"
     },
     {
-      "id": "dart-20260921000209",
-      "name": "에이엘로봇",
-      "date": "2026-10-26",
-      "endDate": "2026-10-27",
-      "broker": "대신증권",
-      "price": null,
-      "priceBand": "15,700원 (공시 표시값)",
-      "listing": null,
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000209",
-      "receiptNo": "20260921000209"
-    },
-    {
       "id": "dart-20260918000439",
       "name": "엠비디",
       "date": "2026-10-28",
@@ -341,6 +328,21 @@
       "receiptNo": "20261007000505"
     },
     {
+      "id": "dart-20261012000149",
+      "name": "SimwonAmericaCorp.",
+      "date": "2026-11-05",
+      "endDate": "2026-11-05",
+      "broker": "-",
+      "price": null,
+      "priceBand": "26,784원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261012000149",
+      "receiptNo": "20261012000149"
+    },
+    {
       "id": "dart-20260929000347",
       "name": "옵토닉스",
       "date": "2026-11-05",
@@ -354,6 +356,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260929000347",
       "receiptNo": "20260929000347"
+    },
+    {
+      "id": "dart-20261012000490",
+      "name": "에이엘로봇",
+      "date": "2026-11-06",
+      "endDate": "2026-11-09",
+      "broker": "대신증권",
+      "price": null,
+      "priceBand": "15,700원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261012000490",
+      "receiptNo": "20261012000490"
     },
     {
       "id": "dart-20261008000705",
@@ -399,6 +416,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261008000660",
       "receiptNo": "20261008000660"
+    },
+    {
+      "id": "dart-20261012000445",
+      "name": "아델",
+      "date": "2026-11-23",
+      "endDate": "2026-11-24",
+      "broker": "삼성증권, 미래에셋증권",
+      "price": null,
+      "priceBand": "18,000원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261012000445",
+      "receiptNo": "20261012000445"
     },
     {
       "id": "dart-20261002000390",
