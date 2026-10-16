@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-15T09:35:08+09:00",
+  "generatedAt": "2026-10-16T09:27:09+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
@@ -22,19 +22,21 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261007000328",
+      "id": "dart-20261015000326",
       "name": "엠에스바이오",
       "date": "2026-10-12",
       "endDate": "2026-10-13",
       "broker": "KB증권",
       "price": null,
       "priceBand": "6,800원 (공시 표시값)",
-      "listing": null,
+      "listing": "2026-10-22",
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261007000328",
-      "receiptNo": "20261007000328"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261015000326",
+      "receiptNo": "20261015000326",
+      "listingSource": "KIND",
+      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
       "id": "dart-20261012000323",
@@ -204,21 +206,6 @@
       "receiptNo": "20261015000017"
     },
     {
-      "id": "dart-20260918000439",
-      "name": "엠비디",
-      "date": "2026-10-28",
-      "endDate": "2026-10-29",
-      "broker": "하나증권",
-      "price": null,
-      "priceBand": "9,600원 (공시 표시값)",
-      "listing": null,
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260918000439",
-      "receiptNo": "20260918000439"
-    },
-    {
       "id": "dart-20261001000579",
       "name": "동원파츠",
       "date": "2026-11-02",
@@ -234,7 +221,7 @@
       "receiptNo": "20261001000579"
     },
     {
-      "id": "dart-20261001000582",
+      "id": "dart-20261015000345",
       "name": "바로팜",
       "date": "2026-11-02",
       "endDate": "2026-11-03",
@@ -245,8 +232,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261001000582",
-      "receiptNo": "20261001000582"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261015000345",
+      "receiptNo": "20261015000345"
     },
     {
       "id": "dart-20260928000260",
@@ -382,6 +369,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261008000660",
       "receiptNo": "20261008000660"
+    },
+    {
+      "id": "dart-20261015000329",
+      "name": "엠비디",
+      "date": "2026-11-12",
+      "endDate": "2026-11-13",
+      "broker": "하나증권",
+      "price": null,
+      "priceBand": "9,600원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261015000329",
+      "receiptNo": "20261015000329"
     },
     {
       "id": "dart-20261012000445",
