@@ -1,4 +1,4 @@
-const CACHE = 'ipo-record-shell-v9';
+const CACHE = 'ipo-record-shell-v10';
 const STATIC = [
   './manifest.json',
   './icon-192.png',

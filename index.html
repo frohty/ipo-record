@@ -56,6 +56,7 @@
     .primary{width:100%;border:0;border-radius:13px;background:var(--accent);color:white;padding:13px;margin-top:14px;font-weight:800}
     .secondary{width:100%;border:1px solid var(--line);border-radius:13px;background:white;padding:12px;margin-top:8px}
     .danger{width:100%;border:1px solid #e5a09a;border-radius:13px;background:#fff3f1;color:#b63f36;padding:12px;margin-top:8px;font-weight:800}
+    .pnl-sign{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:7px}.pnl-sign label{margin:0}.pnl-sign input{position:absolute;opacity:0;pointer-events:none}.pnl-sign span{display:block;text-align:center;border:1px solid var(--line);border-radius:12px;background:white;padding:11px 6px;font-weight:800;cursor:pointer}.pnl-sign input[value="1"]:checked+span{border-color:#e76b6b;background:#fff0f0;color:#e31d1d}.pnl-sign input[value="-1"]:checked+span{border-color:#6c99e8;background:#eef5ff;color:#1765d5}
     .search{width:100%;border:1px solid var(--line);background:white;border-radius:14px;padding:12px 14px;margin:4px 0 10px}
     .empty{text-align:center;color:var(--muted);padding:28px 8px}
     .yearpick{display:flex;align-items:center;justify-content:center;gap:24px;font-size:22px;font-weight:800;margin:4px 0 12px}
@@ -139,7 +140,9 @@
       <label>매도수량</label><input id="saleQty" type="number" min="1" value="1" oninput="updateSaleInfo()">
       <label>매도가</label><input id="salePrice" type="number" min="0" placeholder="예: 33100">
       <label>실제 매도일</label><input id="saleDate" type="date">
-      <label>실제 매매손익</label><input id="salePnl" type="number" placeholder="증권사 표시 손익">
+      <label>증권사 표시손익</label>
+      <div class="pnl-sign"><label><input type="radio" name="salePnlSign" value="1" checked><span>수익 ＋</span></label><label><input type="radio" name="salePnlSign" value="-1"><span>손실 －</span></label></div>
+      <input id="salePnl" type="number" min="0" inputmode="numeric" placeholder="금액만 입력 · 미입력 가능">
       <button class="primary" id="saleSaveButton" onclick="saveSale()">저장</button><button class="danger" id="saleDeleteButton" style="display:none" onclick="deleteSale()">매도내역 삭제</button><button class="secondary" onclick="backActions()">뒤로</button>
     </div>
   </div>
@@ -331,7 +334,7 @@ function changeYear(d){currentYear=Math.min(2035,Math.max(2023,currentYear+d));r
 
 function openDetail(id,opts={}){
  const r=records.find(x=>x.id===id); if(!r)return;
- const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`${s.pnl>=0?"+":""}${fmt(s.pnl)}`}</small><button class="edit-sale-btn" onclick="editSale('${r.id}',${i})">✏️ 매도내역 수정</button></div>`).join("");
+ const sales=(r.sales||[]).map((s,i)=>`<div class="event"><b>${i+1}차 매도</b><div>${s.date?ymd(s.date):(s.dateText||"미기록")} · ${s.qty??"미기록"}주 · ${s.price==null?"미기록":fmt(s.price)}</div><small>증권사 표시손익 ${s.pnl==null?"미입력":`<span class="${pnlClass(s.pnl)}">${s.pnl>0?"+":""}${fmt(s.pnl)}</span>`}</small><button class="edit-sale-btn" onclick="editSale('${r.id}',${i})">✏️ 매도내역 수정</button></div>`).join("");
  document.getElementById("detail").innerHTML=`
    <div class="card"><div class="section-title"><strong>${r.name}</strong>${statusBadge(r)}</div><div class="sub">${r.broker} · ${r.year}년 공모주</div></div>
    <div class="card"><strong>기본정보</strong>
@@ -391,7 +394,7 @@ function renderMore(){
  document.getElementById("more").innerHTML=`
  <div class="card"><div class="section-title"><strong>증권사 관리</strong></div><button class="secondary" onclick="go('brokerManage')">내 증권사 목록</button><div class="notice" style="margin-top:8px">활성/비활성 관리 · 하나증권은 혼합사용으로 등록</div></div>
  <div class="card"><div class="section-title"><strong>데이터 관리</strong></div><button class="secondary" onclick="backup()">데이터 백업(JSON)</button><label class="secondary" style="display:block;text-align:center;cursor:pointer">데이터 복원<input type="file" accept=".json,application/json" style="display:none" onchange="restoreFile(this.files[0])"></label><button class="secondary" onclick="resetAllData()">전체 기록 초기화</button></div>
- <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.6</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>매도내역 개별 수정·삭제 · 전체 연도 통합검색 · 상장일 기준 상태 전환 적용.<br>청약정보는 OpenDART, 상장예정일은 한국거래소 KIND로 매일 교차 확인합니다.</div></div>`;
+ <div class="card"><div class="section-title"><strong>앱 정보</strong></div><div class="notice"><b>공모주 기록장 v1.7.7</b><br>2023~2025 과거 기록은 참고용, 2026년부터 정확하게 관리합니다.<br>수익·손실 선택 입력 · 매도내역 개별 수정·삭제 · 전체 연도 통합검색 적용.<br>청약정보는 OpenDART, 상장예정일은 한국거래소 KIND로 매일 교차 확인합니다.</div></div>`;
 }
 
 let currentScreen="home";
@@ -464,6 +467,7 @@ function resetSaleForm(){
  document.getElementById("salePrice").value="";
  document.getElementById("saleDate").value="";
  document.getElementById("salePnl").value="";
+ document.querySelector('input[name="salePnlSign"][value="1"]').checked=true;
 }
 function showForm(id,preserveSaleValues=false){document.getElementById("actions").style.display="none";document.querySelectorAll(".form").forEach(x=>x.classList.remove("show"));document.getElementById(id).classList.add("show");if(id==="subForm")updateSubCalc();if(id==="saleForm"){if(!preserveSaleValues)resetSaleForm();updateSaleInfo()}}
 function backActions(){document.getElementById("actions").style.display="block";document.querySelectorAll(".form").forEach(x=>x.classList.remove("show"))}
@@ -484,13 +488,13 @@ function editSale(recordId,index){
  const stock=document.getElementById("saleStock");stock.innerHTML=`<option value="${r.id}">${r.name}</option>`;stock.value=r.id;stock.disabled=true;
  document.getElementById("saleFormTitle").textContent="매도내역 수정";document.getElementById("saleSaveButton").textContent="수정 저장";
  document.getElementById("saleDeleteButton").style.display="block";
- document.getElementById("saleQty").value=s.qty??"";document.getElementById("salePrice").value=s.price??"";document.getElementById("saleDate").value=s.date||"";document.getElementById("salePnl").value=s.pnl??"";
+ document.getElementById("saleQty").value=s.qty??"";document.getElementById("salePrice").value=s.price??"";document.getElementById("saleDate").value=s.date||"";document.getElementById("salePnl").value=s.pnl==null?"":Math.abs(Number(s.pnl));document.querySelector(`input[name="salePnlSign"][value="${Number(s.pnl)<0?-1:1}"]`).checked=true;
  pushSheetHistory();document.getElementById("sheetback").classList.add("show");showForm("saleForm",true);
 }
 function saveSale(){
  const recordId=editingSaleRecordId||document.getElementById("saleStock").value,r=records.find(x=>x.id===recordId);if(!r)return alert("보유 종목이 없어요.");
- const q=Number(document.getElementById("saleQty").value),p=Number(document.getElementById("salePrice").value),d=document.getElementById("saleDate").value,pnlText=document.getElementById("salePnl").value.trim(),pnl=pnlText===""?null:Number(pnlText),capacity=saleCapacity(r);
- if(!Number.isInteger(q)||q<1||q>capacity||!p||!d||(pnl!==null&&!Number.isFinite(pnl)))return alert("매도수량·매도가·매도일을 확인해주세요. 손익은 나중에 입력해도 됩니다.");
+ const q=Number(document.getElementById("saleQty").value),p=Number(document.getElementById("salePrice").value),d=document.getElementById("saleDate").value,pnlText=document.getElementById("salePnl").value.trim(),pnlAmount=pnlText===""?null:Number(pnlText),pnlSign=Number(document.querySelector('input[name="salePnlSign"]:checked').value),pnl=pnlAmount===null?null:pnlSign*Math.abs(pnlAmount),capacity=saleCapacity(r);
+ if(!Number.isInteger(q)||q<1||q>capacity||!p||!d||(pnlAmount!==null&&(!Number.isFinite(pnlAmount)||pnlAmount<0)))return alert("매도수량·매도가·매도일을 확인해주세요. 손익은 나중에 입력해도 됩니다.");
  const sale={qty:q,price:p,date:d,pnl};
  if(editingSaleIndex>=0)r.sales[editingSaleIndex]=sale;else r.sales.push(sale);
  applyRecordStatus(r);persist();const edited=editingSaleIndex>=0;editingSaleRecordId=null;editingSaleIndex=-1;closeSheet();

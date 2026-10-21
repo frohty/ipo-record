@@ -34,5 +34,10 @@ assert(html.includes('전체 연도 검색 결과 ${arr.length}건'), "global se
 assert(html.includes('r.sales.splice(index,1)'), "sale deletion must remove only the selected sale");
 assert(html.includes('applyRecordStatus(r);persist()'), "sale deletion must recalculate status and persist immediately");
 assert(html.includes('id="saleDeleteButton"'), "sale editing form must expose a delete action");
+assert(html.includes('name="salePnlSign" value="1"'), "sale form must expose profit selection");
+assert(html.includes('name="salePnlSign" value="-1"'), "sale form must expose loss selection");
+assert(html.includes('pnlSign*Math.abs(pnlAmount)'), "selected sign must be applied to the saved PnL amount");
+assert(html.includes('s.pnl==null?"":Math.abs(Number(s.pnl))'), "editing must show the absolute amount while preserving blank PnL");
+assert(html.includes('Number(s.pnl)<0?-1:1'), "editing must restore the saved PnL sign");
 
 console.log("app status and sale logic OK");
