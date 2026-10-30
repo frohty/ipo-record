@@ -1,60 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T10:51:01+09:00",
+  "generatedAt": "2026-10-30T11:00:45+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
-    {
-      "id": "dart-20261023000137",
-      "name": "크리에이츠",
-      "date": "2026-10-20",
-      "endDate": "2026-10-21",
-      "broker": "삼성증권",
-      "price": null,
-      "priceBand": "15,000원 (공시 표시값)",
-      "listing": "2026-10-29",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261023000137",
-      "receiptNo": "20261023000137",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
-    {
-      "id": "dart-20261023000488",
-      "name": "한화플러스제6호기업인수목적",
-      "date": "2026-10-20",
-      "endDate": "2026-10-21",
-      "broker": "한화투자증권",
-      "price": null,
-      "priceBand": "2,000원 (공시 표시값)",
-      "listing": "2026-10-30",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261023000488",
-      "receiptNo": "20261023000488",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
-    {
-      "id": "dart-20261026000059",
-      "name": "인텔리빅스",
-      "date": "2026-10-21",
-      "endDate": "2026-10-22",
-      "broker": "미래에셋증권",
-      "price": null,
-      "priceBand": "7,600원 (공시 표시값)",
-      "listing": "2026-10-31",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261026000059",
-      "receiptNo": "20261026000059",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
     {
       "id": "dart-20261027000261",
       "name": "래블업",
@@ -107,7 +56,7 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261022000376",
+      "id": "dart-20261029000155",
       "name": "아이엠기업인수목적1호",
       "date": "2026-10-26",
       "endDate": "2026-10-27",
@@ -118,8 +67,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261022000376",
-      "receiptNo": "20261022000376",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000155",
+      "receiptNo": "20261029000155",
       "listingSource": "KIND",
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
@@ -203,7 +152,7 @@
       "receiptNo": "20261012000149"
     },
     {
-      "id": "dart-20261023000210",
+      "id": "dart-20261029000524",
       "name": "옵토닉스",
       "date": "2026-11-05",
       "endDate": "2026-11-06",
@@ -214,8 +163,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261023000210",
-      "receiptNo": "20261023000210"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000524",
+      "receiptNo": "20261029000524"
     },
     {
       "id": "dart-20261012000490",
@@ -353,7 +302,7 @@
       "receiptNo": "20261027000312"
     },
     {
-      "id": "dart-20261028000471",
+      "id": "dart-20261029000239",
       "name": "신영해피투모로우제12호기업인수목적",
       "date": "2026-11-24",
       "endDate": "2026-11-25",
@@ -364,8 +313,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000471",
-      "receiptNo": "20261028000471"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000239",
+      "receiptNo": "20261029000239"
     },
     {
       "id": "dart-20261026000367",
