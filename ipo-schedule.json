@@ -1,43 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T12:30:57+09:00",
+  "generatedAt": "2026-11-04T11:24:12+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
-    {
-      "id": "dart-20261027000044",
-      "name": "이에스티",
-      "date": "2026-10-22",
-      "endDate": "2026-10-23",
-      "broker": "대신증권",
-      "price": null,
-      "priceBand": "10,600원 (공시 표시값)",
-      "listing": "2026-11-04",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261027000044",
-      "receiptNo": "20261027000044",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
-    {
-      "id": "dart-20261029000155",
-      "name": "아이엠기업인수목적1호",
-      "date": "2026-10-26",
-      "endDate": "2026-10-27",
-      "broker": "아이엠증권",
-      "price": null,
-      "priceBand": "2,000원 (공시 표시값)",
-      "listing": "2026-11-04",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000155",
-      "receiptNo": "20261029000155",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
     {
       "id": "dart-20261030000114",
       "name": "동원파츠",
@@ -63,12 +29,14 @@
       "broker": "미래에셋증권",
       "price": null,
       "priceBand": "16,400원 (공시 표시값)",
-      "listing": null,
+      "listing": "2026-11-11",
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261030000406",
-      "receiptNo": "20261030000406"
+      "receiptNo": "20261030000406",
+      "listingSource": "KIND",
+      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
       "id": "dart-20261030000472",
@@ -88,7 +56,7 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261103000003",
+      "id": "dart-20261103000312",
       "name": "영광와이케이엠씨",
       "date": "2026-11-04",
       "endDate": "2026-11-05",
@@ -99,8 +67,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000003",
-      "receiptNo": "20261103000003"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000312",
+      "receiptNo": "20261103000312"
     },
     {
       "id": "dart-20261030000200",
@@ -165,7 +133,7 @@
       "receiptNo": "20261019000085"
     },
     {
-      "id": "dart-20261016000412",
+      "id": "dart-20261103000363",
       "name": "씨앤엠",
       "date": "2026-11-12",
       "endDate": "2026-11-13",
@@ -176,8 +144,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261016000412",
-      "receiptNo": "20261016000412"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000363",
+      "receiptNo": "20261103000363"
     },
     {
       "id": "dart-20261015000329",
@@ -330,7 +298,7 @@
       "receiptNo": "20261030000682"
     },
     {
-      "id": "dart-20261027000363",
+      "id": "dart-20261103000358",
       "name": "엔키화이트햇",
       "date": "2026-12-01",
       "endDate": "2026-12-02",
@@ -341,8 +309,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261027000363",
-      "receiptNo": "20261027000363"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000358",
+      "receiptNo": "20261103000358"
     },
     {
       "id": "dart-20261026000285",
