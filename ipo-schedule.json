@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T11:24:12+09:00",
+  "generatedAt": "2026-11-05T11:30:44+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
     {
-      "id": "dart-20261030000114",
+      "id": "dart-20261105000056",
       "name": "동원파츠",
       "date": "2026-11-02",
       "endDate": "2026-11-03",
@@ -16,13 +16,13 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261030000114",
-      "receiptNo": "20261030000114",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261105000056",
+      "receiptNo": "20261105000056",
       "listingSource": "KIND",
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261030000406",
+      "id": "dart-20261105000006",
       "name": "바로팜",
       "date": "2026-11-02",
       "endDate": "2026-11-03",
@@ -33,8 +33,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261030000406",
-      "receiptNo": "20261030000406",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261105000006",
+      "receiptNo": "20261105000006",
       "listingSource": "KIND",
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
@@ -101,7 +101,7 @@
       "receiptNo": "20261029000524"
     },
     {
-      "id": "dart-20261103000055",
+      "id": "dart-20261104000315",
       "name": "에이엘로봇",
       "date": "2026-11-06",
       "endDate": "2026-11-09",
@@ -112,8 +112,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000055",
-      "receiptNo": "20261103000055",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261104000315",
+      "receiptNo": "20261104000315",
       "listingSource": "KIND",
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
@@ -163,7 +163,7 @@
       "receiptNo": "20261015000329"
     },
     {
-      "id": "dart-20261016000426",
+      "id": "dart-20261104000145",
       "name": "제이앤티지",
       "date": "2026-11-12",
       "endDate": "2026-11-13",
@@ -174,11 +174,11 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261016000426",
-      "receiptNo": "20261016000426"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261104000145",
+      "receiptNo": "20261104000145"
     },
     {
-      "id": "dart-20261019000368",
+      "id": "dart-20261104000099",
       "name": "에스에프씨",
       "date": "2026-11-18",
       "endDate": "2026-11-19",
@@ -189,8 +189,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261019000368",
-      "receiptNo": "20261019000368"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261104000099",
+      "receiptNo": "20261104000099"
     },
     {
       "id": "dart-20261021000443",
