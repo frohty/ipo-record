@@ -1,26 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T10:45:36+09:00",
+  "generatedAt": "2026-11-10T13:09:25+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
-    {
-      "id": "dart-20261105000056",
-      "name": "동원파츠",
-      "date": "2026-11-02",
-      "endDate": "2026-11-03",
-      "broker": "삼성증권",
-      "price": null,
-      "priceBand": "23,000원 (공시 표시값)",
-      "listing": "2026-11-10",
-      "industry": null,
-      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
-      "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261105000056",
-      "receiptNo": "20261105000056",
-      "listingSource": "KIND",
-      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
-    },
     {
       "id": "dart-20261105000006",
       "name": "바로팜",
@@ -56,19 +39,21 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261103000312",
+      "id": "dart-20261109000183",
       "name": "영광와이케이엠씨",
       "date": "2026-11-04",
       "endDate": "2026-11-05",
       "broker": "대신증권",
       "price": null,
       "priceBand": "9,400원 (공시 표시값)",
-      "listing": null,
+      "listing": "2026-11-16",
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000312",
-      "receiptNo": "20261103000312"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109000183",
+      "receiptNo": "20261109000183",
+      "listingSource": "KIND",
+      "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
       "id": "dart-20261030000200",
@@ -118,7 +103,7 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261019000085",
+      "id": "dart-20261109000166",
       "name": "하나에어로다이내믹스",
       "date": "2026-11-10",
       "endDate": "2026-11-11",
@@ -129,8 +114,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261019000085",
-      "receiptNo": "20261019000085"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109000166",
+      "receiptNo": "20261109000166"
     },
     {
       "id": "dart-20261109000012",
@@ -178,7 +163,7 @@
       "receiptNo": "20261109000006"
     },
     {
-      "id": "dart-20261104000099",
+      "id": "dart-20261110000027",
       "name": "에스에프씨",
       "date": "2026-11-18",
       "endDate": "2026-11-19",
@@ -189,8 +174,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261104000099",
-      "receiptNo": "20261104000099"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110000027",
+      "receiptNo": "20261110000027"
     },
     {
       "id": "dart-20261021000443",
@@ -328,7 +313,7 @@
       "receiptNo": "20261106000449"
     },
     {
-      "id": "dart-20261021000153",
+      "id": "dart-20261109000160",
       "name": "이노보테라퓨틱스",
       "date": "2026-12-07",
       "endDate": "2026-12-08",
@@ -339,8 +324,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261021000153",
-      "receiptNo": "20261021000153"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109000160",
+      "receiptNo": "20261109000160"
     },
     {
       "id": "dart-20261022000478",
