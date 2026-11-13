@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-12T12:03:12+09:00",
+  "generatedAt": "2026-11-13T11:39:55+09:00",
   "source": "OpenDART + KIND",
   "notice": "청약정보는 OpenDART, 상장예정일은 한국거래소 KIND에서 종목명과 청약기간이 일치할 때만 반영합니다. 미확인 종목은 상장대기로 유지됩니다.",
   "items": [
@@ -148,7 +148,7 @@
       "receiptNo": "20261110000027"
     },
     {
-      "id": "dart-20261021000443",
+      "id": "dart-20261112000439",
       "name": "유캐스트",
       "date": "2026-11-18",
       "endDate": "2026-11-19",
@@ -159,8 +159,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261021000443",
-      "receiptNo": "20261021000443"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112000439",
+      "receiptNo": "20261112000439"
     },
     {
       "id": "dart-20261111000327",
@@ -345,7 +345,7 @@
       "kindUrl": "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     },
     {
-      "id": "dart-20261028000336",
+      "id": "dart-20261112000690",
       "name": "KTE",
       "date": "2026-12-14",
       "endDate": "2026-12-15",
@@ -356,8 +356,8 @@
       "industry": null,
       "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
       "source": "OpenDART",
-      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000336",
-      "receiptNo": "20261028000336"
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112000690",
+      "receiptNo": "20261112000690"
     },
     {
       "id": "dart-20261028000434",
@@ -373,6 +373,21 @@
       "source": "OpenDART",
       "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000434",
       "receiptNo": "20261028000434"
+    },
+    {
+      "id": "dart-20261112000748",
+      "name": "태석광학",
+      "date": "2026-12-14",
+      "endDate": "2026-12-15",
+      "broker": "신한투자증권, 대신증권",
+      "price": null,
+      "priceBand": "17,500원 (공시 표시값)",
+      "listing": null,
+      "industry": null,
+      "description": "OpenDART 증권신고서에서 확인된 신규상장 일정",
+      "source": "OpenDART",
+      "sourceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112000748",
+      "receiptNo": "20261112000748"
     }
   ]
 }
